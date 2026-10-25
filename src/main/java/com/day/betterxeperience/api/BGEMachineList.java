@@ -1,0 +1,27 @@
+package com.day.betterxeperience.api;
+
+import net.minecraft.item.ItemStack;
+
+public enum BGEMachineList {
+
+    BetterTSTNetherInterface;
+
+    private ItemStack stack;
+
+    public void set(ItemStack value) {
+        if (stack != null) throw new IllegalStateException("Machine already registered: " + name());
+        if (value == null || value.getItem() == null || value.stackSize <= 0) {
+            throw new IllegalArgumentException("Invalid machine stack: " + name());
+        }
+        stack = value.copy();
+        stack.stackSize = 1;
+    }
+
+    public ItemStack get(int amount) {
+        if (stack == null) throw new IllegalStateException("Machine not registered: " + name());
+        if (amount <= 0) throw new IllegalArgumentException("Machine amount must be positive");
+        ItemStack result = stack.copy();
+        result.stackSize = amount;
+        return result;
+    }
+}
