@@ -66,6 +66,23 @@
 - 换热类型组织：`J/utils/enums/SteamTypes.java` 只采用组织思路，不复用其蒸汽体系、倍率或自有 API。
 - 不迁入参考库的自有配方工具类、`RecipeBuilder` 变体或工具箱扩展。
 
+### 长整型输入消耗
+
+- 物品参考 `J/common/machine/multiblock/GrandAssemblyLine.java` 的 `consumeItemsUnordered`／`depleteFromRequirement`，流体参考同类 `consumeFluidsUnordered`：先将单次需求提升为 `long` 再乘并行数，跨多个 `int` 栈扣除，每次扣除量不超过该栈数量。
+- 流体排液参考 `J/common/machine/multiblock/EyeOfHarmonyInjector.java` 的 `drainFluidLong`：总需求使用 `long`，单次仓口请求限制在 `Integer.MAX_VALUE` 内。GTNL `MultiMachineBase.depleteInputQuantity` 本身仍为 `int`，不是无限扣料接口。
+- 本项目核对实际缓存 GT5U `5.09.54.205` sources JAR：`GTRecipe.consumeInput` 已按 `long` 计算物品／流体并行总耗料；`MTEMultiBlockBase` 的普通输入集合会去重 ME 材料，ME 仓口在 `startRecipeProcessing`／`endRecipeProcessing` 间暴露并提交原始快照引用。
+- 本项目独立实现 `BGTEMultiblockBase.depleteInput(ItemStack/FluidStack, long, boolean)`：仅借鉴长整型余量与跨栈扣除思路，不复制 GTNL 代码或资源（参考仓库许可证为 LGPLv3）。先检查总量，足够后才扣除；模拟不改数量。物品按 GT 原生物品／通配元数据／NBT 规则匹配，不进行矿辞替代或容器转流体；流体匹配类型与 NBT。
+- 只支持普通输入集合，不将独立合成缓存分组混为共享库存。单个物品栈／流体栈及 ME 单种材料快照仍为 `int`；本次能力是跨栈总消耗超过 `int`，不是解除 ME 快照上限、增加长整型配方栈或扩展输出。调用方自行协调多材料校验；本接口的不足不扣料仅覆盖单次调用，不覆盖 ME 最终提交失败。
+
+### 长整型并行产出
+
+- 本项目实际缓存 GT5U `5.09.54.205` 的 `gregtech.api.util.ParallelHelper` 已提供公开静态方法 `addItemsLong(ArrayList<ItemStack>, ItemStack, long)` 和 `addFluidsLong(ArrayList<FluidStack>, FluidStack, long)`；标准配方的并行输出计算也调用这两个方法。
+- 总产量先提升为 `long` 再乘并行数，方法将正数总量拆成多个不超过 `Integer.MAX_VALUE` 的栈；零或负数不追加。单栈字段仍为 `int`，同一种产物可在 `mOutputItems`／`mOutputFluids` 数组中重复出现，数组总量不受单栈 `int` 上限约束。不得将拆分结果再合并回单个 `int` 栈。
+- GTNL `J/utils/Utils.java` 的两个 `addStacksToList(..., long amount)` 使用相同分段思路；本项目直接复用 GT 原生方法，不复制 GTNL 工具代码。
+- `.205` 的 `Materials.getFluid(long)`／`getMolten(long)` 内部会强转为 `int`，不会拆栈。调用拆分方法时使用小数量模板栈，总量单独传入；不能先创建已溢出的模板再拆分。
+- 地狱接口自定义 `checkProcessing()` 不经过标准配方的自动输出计算，显式调用上述方法生成物品与流体数组；耗水总量及跨栈扣除余量同样使用 `long`。并行次数仍使用 GT 原生 `int`，本项扩展的是并行后的总数量，不是并行次数或单栈字段。
+- 拆栈不等于输出空间校验或堵塞保护，也不解除单种 ME 输入快照的 `int` 上限。
+
 ### Tooltip 与仓口
 
 - 结构／仓口提示组织：`NuclearReactor.java`、`wireless/FastNeutronBreederReactor.java`；主题分隔与分组写法：`WhiteNightGenerator.java`。

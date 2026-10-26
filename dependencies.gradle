@@ -78,6 +78,12 @@ dependencies {
     //runtime
     //runtimeOnlyNonPublishable("com.github.GTNewHorizons:NotEnoughItems:2.8.125-GTNH:dev")
     runtimeOnlyNonPublishable(gtnhDev("NotEnoughItems"))
+    // Transitive TCNEIAdditions/ThaumicTinkerer metadata brings in the SRG jar; remap it for MCP runs.
+    runtimeOnlyNonPublishable(rfg.deobf("curse.maven:thaumcraft-nei-plugin-225095:2241913"))
+    // CropsNH's post-init compat handler resolves this API even when the wand mod is absent.
+    runtimeOnlyNonPublishable(gtnhDev("BetterBuildersWands"))
+    runtimeOnlyNonPublishable("ganymedes01.etfuturum:Et-Futurum-Requiem:2.6.60-GTNH:dev")
+    runtimeOnlyNonPublishable(gtnhDev("ThaumicTinkerer"))
     runtimeOnlyNonPublishable(gtnhDev("OpenComputers"))
     ["spark.jar", "OmniOcularUnofficial.jar"].each { jarName ->
         def localMod = file("libs/${jarName}")
@@ -112,6 +118,21 @@ dependencies {
     configurations.all {
         resolutionStrategy {
             force "com.github.GTNewHorizons:GTNHLib:0.11.52"
+        }
+    }
+}
+
+// TST's module metadata omits these classifiers; mixing plain and dev jars duplicates Forge mod IDs.
+configurations.configureEach {
+    resolutionStrategy.dependencySubstitution.all { substitution ->
+        def requested = substitution.requested
+        if (requested instanceof org.gradle.api.artifacts.component.ModuleComponentSelector
+            && ((requested.group == 'io.github.legacymoddingmc' && requested.module == 'unimixins')
+                || (requested.group == 'thaumcraft' && requested.module == 'Thaumcraft'))) {
+            substitution.useTarget(requested, 'Use one dev artifact per mod in the development classpath')
+            substitution.artifactSelection {
+                selectArtifact('jar', 'jar', 'dev')
+            }
         }
     }
 }

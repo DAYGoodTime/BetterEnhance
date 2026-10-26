@@ -5,7 +5,7 @@
  * Modified for BetterGTExperience: project base, registration, native tooltip and bounded arithmetic.
  * This adaptation is distributed under GNU GPL v3; see THIRD_PARTY_NOTICES.md.
  */
-package com.day.betterxeperience.common.machine;
+package com.day.betterexperience.common.machine;
 
 import static com.Nxer.TwistSpaceTechnology.common.init.TstBlocks.MetaBlockCasing02;
 import static com.Nxer.TwistSpaceTechnology.common.recipeMap.GTCMRecipe.NetherInterfaceVisualRecipeMap;
@@ -39,7 +39,7 @@ import com.Nxer.TwistSpaceTechnology.common.machine.MachineTexture.TSTController
 import com.Nxer.TwistSpaceTechnology.common.machine.MiscHelper;
 import com.Nxer.TwistSpaceTechnology.common.machine.TST_NetherInterface;
 import com.Nxer.TwistSpaceTechnology.config.Config;
-import com.day.betterxeperience.common.machine.base.BGTEMultiblockBase;
+import com.day.betterexperience.common.machine.base.BGTEMultiblockBase;
 import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
 import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
@@ -56,29 +56,30 @@ import gregtech.api.recipe.check.CheckRecipeResultRegistry;
 import gregtech.api.structure.error.StructureError;
 import gregtech.api.util.HatchElementBuilder;
 import gregtech.api.util.MultiblockTooltipBuilder;
+import gregtech.api.util.ParallelHelper;
 
 public class BetterTSTNetherInterface extends BGTEMultiblockBase<BetterTSTNetherInterface> {
 
     private static IStructureDefinition<BetterTSTNetherInterface> structureDefinition;
 
     // spotless:off
-    private static final String[][] SHAPE_MAIN = new String[][] {
-        { "               ", " AAAAAAAAAAAAA ", " AAAAAAAAAAAAA ", " AAAAAAAAAAAAA " },
-        { "               ", " A           A ", " CCCCCCCCCCCCC ", " A           A " },
-        { "               ", " BCCCCCCCCCCCB ", " CDDDDDDDDDDDC ", " BCCCCCCCCCCCB " },
-        { "               ", " BC         CB ", " CD         DC ", " BC         CB " },
-        { "               ", " BC         CB ", " CD         DC ", " BC         CB " },
-        { "               ", " BC         CB ", " CD         DC ", " BC         CB " },
-        { "               ", " BC         CB ", " CD         DC ", " BC         CB " },
-        { "               ", " BC         CB ", " CD         DC ", " BC         CB " },
-        { "               ", " BC         CB ", " CD         DC ", " BC         CB " },
-        { "               ", " BC         CB ", " CD         DC ", " BC         CB " },
-        { "               ", " BC         CB ", " CD         DC ", " BC         CB " },
-        { "               ", " BC         CB ", " CD         DC ", " BC         CB " },
-        { "               ", " BC         CB ", " CD         DC ", " BC         CB " },
-        { "      A~A      ", " BCCCCCCCCCCCB ", " CDDDDDDDDDDDC ", " BCCCCCCCCCCCB " },
-        { "      AAA      ", "AAAAAAAAAAAAAAA", "ACCCCCCCCCCCCCA", "AAAAAAAAAAAAAAA" },
-        { "      AAA      ", "AAAAAAAAAAAAAAA", "AAAAAAAAAAAAAAA", "AAAAAAAAAAAAAAA" } };
+    private static final String[][] SHAPE_MAIN = new String[][]{
+        {"               ", " AAAAAAAAAAAAA ", " AAAAAAAAAAAAA ", " AAAAAAAAAAAAA "},
+        {"               ", " A           A ", " CCCCCCCCCCCCC ", " A           A "},
+        {"               ", " BCCCCCCCCCCCB ", " CDDDDDDDDDDDC ", " BCCCCCCCCCCCB "},
+        {"               ", " BC         CB ", " CD         DC ", " BC         CB "},
+        {"               ", " BC         CB ", " CD         DC ", " BC         CB "},
+        {"               ", " BC         CB ", " CD         DC ", " BC         CB "},
+        {"               ", " BC         CB ", " CD         DC ", " BC         CB "},
+        {"               ", " BC         CB ", " CD         DC ", " BC         CB "},
+        {"               ", " BC         CB ", " CD         DC ", " BC         CB "},
+        {"               ", " BC         CB ", " CD         DC ", " BC         CB "},
+        {"               ", " BC         CB ", " CD         DC ", " BC         CB "},
+        {"               ", " BC         CB ", " CD         DC ", " BC         CB "},
+        {"               ", " BC         CB ", " CD         DC ", " BC         CB "},
+        {"      A~A      ", " BCCCCCCCCCCCB ", " CDDDDDDDDDDDC ", " BCCCCCCCCCCCB "},
+        {"      AAA      ", "AAAAAAAAAAAAAAA", "ACCCCCCCCCCCCCA", "AAAAAAAAAAAAAAA"},
+        {"      AAA      ", "AAAAAAAAAAAAAAA", "AAAAAAAAAAAAAAA", "AAAAAAAAAAAAAAA"}};
     // spotless:on
 
     public BetterTSTNetherInterface(int id, String name, String regional) {
@@ -137,31 +138,6 @@ public class BetterTSTNetherInterface extends BGTEMultiblockBase<BetterTSTNether
     }
 
     @Override
-    public int getMaxParallelRecipes() {
-        return Config.MaxParallel_NetherInterface;
-    }
-
-    @Override
-    public boolean supportsVoidProtection() {
-        return false;
-    }
-
-    @Override
-    public boolean supportsInputSeparation() {
-        return false;
-    }
-
-    @Override
-    public boolean supportsBatchMode() {
-        return false;
-    }
-
-    @Override
-    public boolean supportsSingleRecipeLocking() {
-        return false;
-    }
-
-    @Override
     protected boolean supportsCraftingMEBuffer() {
         return false;
     }
@@ -175,55 +151,41 @@ public class BetterTSTNetherInterface extends BGTEMultiblockBase<BetterTSTNether
         if (inputEut < energyCost * 3L) {
             return CheckRecipeResultRegistry.insufficientPower(energyCost * 3L);
         }
-
-        List<FluidStack> waters = new ArrayList<>();
+        ArrayList<FluidStack> fluids = getStoredFluids();
+        if (fluids.isEmpty()) {
+            return CheckRecipeResultRegistry.NO_RECIPE;
+        }
         long waterAmount = 0;
         FluidStack distilledWater = MiscHelper.distilledWater;
-        for (FluidStack fluid : getStoredFluids()) {
+        for (FluidStack fluid : fluids) {
             if (fluid != null && fluid.amount > 0 && distilledWater.isFluidEqual(fluid)) {
-                waters.add(fluid);
                 waterAmount += fluid.amount;
             }
         }
-
         long parallelLimit = Math.min(getTrueParallel(), inputEut / energyCost - 2);
         parallelLimit = Math.min(parallelLimit, waterAmount / waterCost);
-        // FluidStack amounts and the original large ItemStacks are int-backed.
-        parallelLimit = Math.min(parallelLimit, Integer.MAX_VALUE / waterCost);
-        parallelLimit = Math.min(parallelLimit, Integer.MAX_VALUE / 288);
-        parallelLimit = Math.min(parallelLimit, Integer.MAX_VALUE / 64);
         int parallel = (int) parallelLimit;
         if (parallel <= 0) return CheckRecipeResultRegistry.NO_RECIPE;
-
         if (TST_NetherInterface.ItemRandomGetter == null) TST_NetherInterface.initStatics();
-        ItemStack[] outputs = new ItemStack[Config.GenerateStackEveryProcessing_NetherInterface];
-        for (int i = 0; i < outputs.length; i++) {
-            outputs[i] = TST_NetherInterface.ItemRandomGetter.getOne()
-                .copy();
-            outputs[i].stackSize *= parallel;
+        ArrayList<ItemStack> outputs = new ArrayList<>();
+        for (int i = 0; i < Config.GenerateStackEveryProcessing_NetherInterface; i++) {
+            ItemStack output = TST_NetherInterface.ItemRandomGetter.getOne();
+            ParallelHelper.addItemsLong(outputs, output, (long) output.stackSize * parallel);
         }
-        int fluidAmount = parallel * waterCost;
-        FluidStack waste = Materials.PoorNetherWaste.getFluid(fluidAmount);
-        FluidStack[] fluidOutputs = XSTR.XSTR_INSTANCE.nextInt(10000)
-            < Config.OutputHellishMetalPercent_NetherInterface * 100
-                ? new FluidStack[] { Materials.HellishMetal.getMolten(288L * parallel), waste }
-                : new FluidStack[] { waste };
-
-        // Keep the transaction-owned references: GT brackets this call for ME extraction.
-        int remaining = fluidAmount;
-        for (FluidStack water : waters) {
-            int consumed = Math.min(water.amount, remaining);
-            water.amount -= consumed;
-            remaining -= consumed;
-            if (remaining == 0) break;
+        long fluidAmount = (long) parallel * waterCost;
+        ArrayList<FluidStack> fluidOutputs = new ArrayList<>();
+        if (XSTR.XSTR_INSTANCE.nextInt(10000) < Config.OutputHellishMetalPercent_NetherInterface * 100) {
+            ParallelHelper.addFluidsLong(fluidOutputs, Materials.HellishMetal.getMolten(1), 288L * parallel);
         }
-        updateSlots();
-        mOutputItems = outputs;
-        mOutputFluids = fluidOutputs;
+        ParallelHelper.addFluidsLong(fluidOutputs, Materials.PoorNetherWaste.getFluid(1), fluidAmount);
+        // consume input after calc outputs
+        if (!depleteInput(distilledWater, fluidAmount)) {
+            return CheckRecipeResultRegistry.NO_RECIPE;
+        }
+        mOutputItems = outputs.toArray(new ItemStack[0]);
+        mOutputFluids = fluidOutputs.toArray(new FluidStack[0]);
         lEUt = -energyCost * (2L + parallel);
         mMaxProgresstime = Config.CycleTime_NetherInterface;
-        mEfficiency = 10000;
-        mEfficiencyIncrease = 10000;
         lastParallel = parallel;
         return CheckRecipeResultRegistry.SUCCESSFUL;
     }
@@ -243,36 +205,32 @@ public class BetterTSTNetherInterface extends BGTEMultiblockBase<BetterTSTNether
     }
 
     private static String text(String key, Object... args) {
-        return StatCollector.translateToLocalFormatted("betterxeperience.machine.nether_interface." + key, args);
+        return StatCollector.translateToLocalFormatted("betterexperience.machine.nether_interface." + key, args);
     }
 
     @Override
     protected MultiblockTooltipBuilder createTooltip() {
-        String hatchPosition = text("hatch_position");
-        return new MultiblockTooltipBuilder().addMachineType(text("type"))
+        String hatchPosition = StatCollector.translateToLocal("tst.common.shared.structure.text_use_blueprint");
+        return new MultiblockTooltipBuilder()
+            .addMachineType(StatCollector.translateToLocal("tst.common.machine.NetherInterface.tooltip.machine_type"))
             .addInfo(text("origin"))
-            .addInfo(text("lore.0"))
-            .addInfo(text("lore.1"))
+            .addInfo(text("info.0"))
+            .addInfo(StatCollector.translateToLocal("tst.common.machine.NetherInterface.tooltip.info.01"))
+            .addInfo(StatCollector.translateToLocal("tst.common.machine.NetherInterface.tooltip.info.02"))
+            .addInfo(StatCollector.translateToLocal("tst.common.machine.NetherInterface.tooltip.info.03"))
             .addSeparator()
-            .addInfo(text("power", Config.BasicEnergyCost_NetherInterface))
-            .addInfo(text("water", Config.BasicDistilledWaterCost_NetherInterface))
-            .addInfo(text("cycle", Config.CycleTime_NetherInterface, Config.MaxParallel_NetherInterface))
-            .addInfo(text("items", Config.GenerateStackEveryProcessing_NetherInterface))
-            .addInfo(text("metal", Config.OutputHellishMetalPercent_NetherInterface))
-            .addSeparator()
-            .addInfo(text("features"))
             .addInfo(text("energy_hatches"))
             .beginStructureBlock(15, 16, 4, true)
-            .addController(text("controller"))
             .addCasing("128", text("casing"), false)
             .addCasing("48", text("frame"), false)
             .addCasing("134", text("enhanced_obsidian"), false)
             .addCasing("42", text("obsidian"), false)
-            .addInputBus(hatchPosition, 1)
-            .addOutputBus(hatchPosition, 1)
-            .addInputHatch(hatchPosition, 1)
-            .addOutputHatch(hatchPosition, 1)
-            .addEnergyHatch(hatchPosition, 1)
-            .toolTipFinisher("Nxer", "Twist Space Technology", "DAYGood_Time");
+            .addInputBus("1+", hatchPosition, 1)
+            .addOutputBus("1+", hatchPosition, 1)
+            .addInputHatch("1+", hatchPosition, 1)
+            .addOutputHatch("1+", hatchPosition, 1)
+            .addEnergyHatch("1+", hatchPosition, 1)
+            .addStructureAuthors("Twist Space Technology")
+            .toolTipFinisher("BetterGTExperience");
     }
 }

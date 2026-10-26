@@ -1,6 +1,6 @@
-package com.day.betterxeperience;
+package com.day.betterexperience;
 
-import com.day.betterxeperience.registry.MachineLoader;
+import com.day.betterexperience.registry.MachineLoader;
 
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLLoadCompleteEvent;

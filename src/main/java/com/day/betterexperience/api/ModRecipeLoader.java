@@ -1,4 +1,4 @@
-package com.day.betterxeperience.api;
+package com.day.betterexperience.api;
 
 public interface ModRecipeLoader {
 

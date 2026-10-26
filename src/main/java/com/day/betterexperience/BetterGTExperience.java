@@ -1,4 +1,4 @@
-package com.day.betterxeperience;
+package com.day.betterexperience;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -19,12 +19,12 @@ import cpw.mods.fml.common.event.FMLServerStartingEvent;
     dependencies = "required-after:gtnhlib;required-after:gregtech;required-after:structurelib;required-after:TwistSpaceTechnology")
 public class BetterGTExperience {
 
-    public static final String MODID = "betterxeperience";
+    public static final String MODID = "betterexperience";
     public static final Logger LOG = LogManager.getLogger(MODID);
 
     @SidedProxy(
-        clientSide = "com.day.betterxeperience.ClientProxy",
-        serverSide = "com.day.betterxeperience.CommonProxy")
+        clientSide = "com.day.betterexperience.ClientProxy",
+        serverSide = "com.day.betterexperience.CommonProxy")
     public static CommonProxy proxy;
 
     @Mod.EventHandler

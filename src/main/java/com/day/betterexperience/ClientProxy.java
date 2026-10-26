@@ -1,4 +1,4 @@
-package com.day.betterxeperience;
+package com.day.betterexperience;
 
 public class ClientProxy extends CommonProxy {
 

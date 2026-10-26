@@ -1,4 +1,4 @@
-package com.day.betterxeperience;
+package com.day.betterexperience;
 
 import com.gtnewhorizon.gtnhlib.config.Config.Comment;
 import com.gtnewhorizon.gtnhlib.config.Config.DefaultString;
@@ -26,7 +26,7 @@ public class Config {
     public static boolean useDevelopmentDefaults = true;
 
     @Comment("通用配置。")
-    @LangKey("betterxeperience.config.general")
+    @LangKey("betterexperience.config.general")
     public static final General general = new General();
 
     public static class General {

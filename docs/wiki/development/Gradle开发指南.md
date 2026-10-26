@@ -49,6 +49,9 @@ JDK 25 是构建运行环境，Jabel 保持 Java 8 字节码目标，不等于�
 | `spotlessJavaCheck` 拒绝格式（包括 `@Mod` 注解） | 执行 `spotlessApply` 后重新检查，不关闭 Spotless |
 | 编译成功，`reobfJar` 报 `DependencyDeobfuscationTransform` | 检查运行时 classpath 的本地 JAR 是否存在、有效且兼容；保持存在性判断 |
 | `mixins.srg does not exist` | 当前没有 `@Mixin` 输入，不伪造 refmap 或空映射；加载配置与注入步骤见 [Mixin 指南](Mixin开发指南.md) |
+| UniMixins 多个模块或 Thaumcraft 报 `Found a duplicate mod` | 先核对日志中的两份 JAR；TST `0.8.0-RC2.6` 的 `.module` 元数据未保留这两个依赖的 `dev` classifier，与其他依赖请求的 `dev` 包同时进入 classpath。`dependencies.gradle` 对这两个模块统一选择 `dev` JAR，不改变版本解析；关闭本项目 `usesMixins` 不能移除依赖带入的重复包 |
+| 旧 `thaumcraftneiplugin` 初始化报 `NoSuchMethodError: func_77625_d(int)` | TCNEIAdditions／ThaumicTinkerer 的传递依赖带入未转换的 CurseMaven 包。`dependencies.gradle` 显式使用 `runtimeOnlyNonPublishable(rfg.deobf("curse.maven:thaumcraft-nei-plugin-225095:2241913"))`，由 RFG 对同一模块执行 SRG → MCP 转换；不直接修改缓存 JAR，也不删除插件 |
+| CropsNH 后初始化缺少 `portablejim/bbw/core/conversion/ICustomMapping` | CropsNH `2.0.134` 的 BetterBuildersWands 兼容处理器在缺少该模组时仍触发 API 类解析。开发运行依赖使用 `runtimeOnlyNonPublishable(gtnhDev("BetterBuildersWands"))` 补齐 `dev` 包；当前清单解析为 `0.13.12-GTNH`，无需修改 CropsNH 或伪造接口 |
 | 配置缓存重新计算 | 文件、Git 状态或动态插件版本缓存变化会触发重算，本身不等于构建失败 |
 | `runServer` 报 `Minecraft EULA not accepted!` | 首次运行 `run/server` 需确认联机模式与 EULA；可在启动时向标准输入依次传入 `y`，或预先放置 `eula.txt`（`eula=true`），不通过修改构建脚本绕过 |
 

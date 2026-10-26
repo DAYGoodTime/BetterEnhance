@@ -1,9 +1,9 @@
-package com.day.betterxeperience.registry;
+package com.day.betterexperience.registry;
 
 import net.minecraft.util.StatCollector;
 
-import com.day.betterxeperience.api.BGEMachineList;
-import com.day.betterxeperience.common.machine.BetterTSTNetherInterface;
+import com.day.betterexperience.api.BGEMachineList;
+import com.day.betterexperience.common.machine.BetterTSTNetherInterface;
 
 import gregtech.api.GregTechAPI;
 
@@ -25,8 +25,8 @@ public class MachineLoader {
         BGEMachineList.BetterTSTNetherInterface.set(
             new BetterTSTNetherInterface(
                 id++,
-                "betterxeperience.nether_interface",
-                StatCollector.translateToLocal("betterxeperience.machine.nether_interface.name")).getStackForm(1));
+                "betterexperience.nether_interface",
+                StatCollector.translateToLocal("betterexperience.machine.nether_interface.name")).getStackForm(1));
         if (id != STARTER_ID + MACHINE_COUNT) {
             throw new IllegalStateException("BetterGTExperience machine count does not match registrations");
         }

@@ -2,6 +2,9 @@
 本项目刚初始化，迁入的旧项目文档仅作为参考，不代表当前已实现功能。
 
 - [当前项目知识库](wiki/development/项目知识库.md)
+- [GTNL 参考与长整型输入消耗](wiki/references/GT-Not-Leisure参考索引.md#长整型输入消耗)
+- [GT 原生长整型并行产出与拆栈](wiki/references/GT-Not-Leisure参考索引.md#长整型并行产出)
+- [TST 本地与远程参考索引](wiki/references/TST参考索引.md)
 - [地狱接口设计草稿](draft/blocks/地狱接口.md)
 - [第三方来源与许可](../THIRD_PARTY_NOTICES.md)
 ## 维护与历史
