@@ -5,7 +5,7 @@
  * Modified for BetterGTExperience: project base, registration, native tooltip and bounded arithmetic.
  * This adaptation is distributed under GNU GPL v3; see THIRD_PARTY_NOTICES.md.
  */
-package com.day.betterexperience.common.machine;
+package com.day.betterexperience.common.machine.multiblock;
 
 import static com.Nxer.TwistSpaceTechnology.common.init.TstBlocks.MetaBlockCasing02;
 import static com.Nxer.TwistSpaceTechnology.common.recipeMap.GTCMRecipe.NetherInterfaceVisualRecipeMap;
@@ -39,7 +39,7 @@ import com.Nxer.TwistSpaceTechnology.common.machine.MachineTexture.TSTController
 import com.Nxer.TwistSpaceTechnology.common.machine.MiscHelper;
 import com.Nxer.TwistSpaceTechnology.common.machine.TST_NetherInterface;
 import com.Nxer.TwistSpaceTechnology.config.Config;
-import com.day.betterexperience.common.machine.base.BGTEMultiblockBase;
+import com.day.betterexperience.common.machine.multiblock.base.BGTEMultiblockBase;
 import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
 import com.gtnewhorizon.structurelib.structure.ISurvivalBuildEnvironment;
 import com.gtnewhorizon.structurelib.structure.StructureDefinition;
@@ -230,7 +230,6 @@ public class BetterTSTNetherInterface extends BGTEMultiblockBase<BetterTSTNether
             .addInputHatch("1+", hatchPosition, 1)
             .addOutputHatch("1+", hatchPosition, 1)
             .addEnergyHatch("1+", hatchPosition, 1)
-            .addStructureAuthors("Twist Space Technology")
-            .toolTipFinisher("BetterGTExperience");
+            .toolTipFinisher("BetterGTExperience", "Twist Space Technology");
     }
 }

@@ -4,7 +4,9 @@ import net.minecraft.item.ItemStack;
 
 public enum BGEMachineList {
 
-    BetterTSTNetherInterface;
+    BetterTSTNetherInterface,
+    BetterTSTPreciseHighEnergyPhotonicQuantumMaster,
+    SteamIndustrialElectrolyzer,
 
     private ItemStack stack;
 

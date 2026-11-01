@@ -88,6 +88,11 @@
 - 结构／仓口提示组织：`NuclearReactor.java`、`wireless/FastNeutronBreederReactor.java`；主题分隔与分组写法：`WhiteNightGenerator.java`。
 - 编号语言键与逐条 `addInfo`：`SiphonTurbine.createTooltip()`。
 - 解析受限的 `SiphonTurbineGui` 同步显示方式仅参考实现思路，本项目沿用既有 info 接口。以上签名均以本项目实际依赖为准，不复制数值、资源或扩展基类。
+- 蒸汽电解机本轮核对：`J/common/machine/multiblock/steam/LargeSteamCentrifuge.java` 的 `getTierRecipes()` 固定为 MV；控制器不锈钢齿轮升级位于同目录 `LargeSteamMixer.java` 的 `checkProcessing()`／`getUpgradeTier()`，原说明为 `R/lang/zh_CN/tooltip/large-steam-mixer.md`。本项目只沿用物品比较与简洁提示写法，不复制搅拌机性能公式。Markdown 读取参考 `J/common/machine/tooltip/MultiblockTooltipReader.java`，本项目直接使用 GT5U `.265` 原生 `MultiblockTooltipBuilder.addMarkdown`，不迁入 GTNL 自动结构扫描器。当前 GTNL `dependencies.gradle` 声明并强制 `.265`，本项目当前 `2.9.0` 缓存清单也指定 `.265`；本轮未重跑依赖解析，下表 `.205` 保留为历史核验记录。
+
+- 蒸汽电解机 GUI／仓口补全参考：`J/common/gui/modularui/GTNLSteamMultiBlockBaseGui.java` 的 `registerSyncValues`、`initPanelMap`、`createRightPanelGapRow` 与 `createRecipeOcPanel`，以及 `J/common/machine/multiMachineBase/SteamMultiMachineBase.java` 的手动超频倍率、存档及 WAILA。复用 0–4 次手动超频、每次耗汽 ×4／时长 ÷2 的行为与侧边输入框组织，使用本项目键名和 GT 原生 `ProcessingLogic`／`OverclockCalculator`，不迁入 GTNL 扩展处理器、纹理或无线网络。同步及倍率计算沿用 GTNL 的 `Math.min(4, value)` 上界限制，NBT 直接读取，不添加额外下限校验；GT5U `.265` 的同步 API、蒸汽 WAILA 跳过普通正文及普通总线集合需显式补齐的差异均按缓存 sources JAR 核对，未重新解析依赖。
+
+蒸汽输入分离／批处理补全参考 `J/common/machine/multiMachineBase/SteamMultiMachineBase.java` 的 `supportsInputSeparation`、`supportsBatchMode`、`getDefaultInputSeparationMode` 与 `doCheckRecipe`：采用默认不分离、普通／蒸汽总线逐仓检查及按颜色共享流体的思路。GT5U `.265` 的普通分离路径仍不遍历蒸汽总线，本项目通过 `checkRecipeForCustomHatches` 补充，不复制 GTNL 整份配方循环；原生合成缓存优先级、普通总线检查、MUI2 同步、NBT 和批处理器继续复用 GT。未复制参考源码或引入 GTNL 处理器。
 
 ### 无线与电网接入
 

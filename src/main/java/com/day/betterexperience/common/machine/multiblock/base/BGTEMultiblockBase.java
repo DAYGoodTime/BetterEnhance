@@ -1,4 +1,4 @@
-package com.day.betterexperience.common.machine.base;
+package com.day.betterexperience.common.machine.multiblock.base;
 
 import java.util.List;
 import java.util.UUID;
@@ -10,12 +10,13 @@ import net.minecraftforge.fluids.FluidStack;
 import com.gtnewhorizon.structurelib.alignment.constructable.ISurvivalConstructable;
 
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
+import gregtech.api.interfaces.tileentity.IVoidable;
 import gregtech.api.logic.ProcessingLogic;
 import gregtech.api.metatileentity.implementations.MTEExtendedPowerMultiBlockBase;
 import gregtech.api.util.GTUtility;
 
 public abstract class BGTEMultiblockBase<T extends BGTEMultiblockBase<T>> extends MTEExtendedPowerMultiBlockBase<T>
-    implements ISurvivalConstructable {
+    implements ISurvivalConstructable, IVoidable {
 
     protected BGTEMultiblockBase(int id, String name, String regional) {
         super(id, name, regional);
@@ -189,4 +190,5 @@ public abstract class BGTEMultiblockBase<T extends BGTEMultiblockBase<T>> extend
     public boolean supportsSingleRecipeLocking() {
         return false;
     }
+
 }

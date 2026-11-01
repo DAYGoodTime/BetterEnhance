@@ -36,7 +36,7 @@
 dependencies {
     elytraModpackVersion {
         // 在这配置的gtnh版本 用于自动拉取依赖版本
-        gtnhVersion = "2.9.0-RC-2"
+        gtnhVersion = "2.9.0"
         // 是否不缓存拉取的依赖清单文件
         manifestNoCache = false
         // 是否自动为输出的jar添加 `gtnhVersion` 后缀
@@ -46,7 +46,7 @@ dependencies {
     //implementation("com.github.GTNewHorizons:NewHorizonsCoreMod:2.9.49:dev")
     implementation(gtnhDev("GT5-Unofficial"))
     // Keep the original Nether Interface's casings, textures, config and visual recipe map.
-    implementation("com.github.Nxer:Twist-Space-Technology-Mod:0.8.0-RC2.6:dev")
+    implementation("com.github.GTNewHorizons:Twist-Space-Technology-Mod:0.8.0-RC2.9-main.2+e450069315-dirty:dev")
     implementation("com.github.GTNewHorizons:GTNHLib:0.11.52:dev")
     implementation(gtnhDev("NewHorizonsCoreMod"))
     // NotEnoughEnergistics: the GTNH NEI -> AE pattern terminal transfer. MessTech hands its own terminal's pages to
@@ -71,10 +71,8 @@ dependencies {
     implementation(gtnhDev("supersolarpanels"))
     implementation(rfg.deobf('curse.maven:advsolar-362768:2885953'))
     implementation ("net.industrial-craft:industrialcraft-2:2.2.828-experimental:dev")
-
     implementation(deobfCurse('witchery-69673:2234410'))
     implementation(gtnhDev("WitcheryExtras"))
-
     //runtime
     //runtimeOnlyNonPublishable("com.github.GTNewHorizons:NotEnoughItems:2.8.125-GTNH:dev")
     runtimeOnlyNonPublishable(gtnhDev("NotEnoughItems"))
@@ -85,12 +83,6 @@ dependencies {
     runtimeOnlyNonPublishable("ganymedes01.etfuturum:Et-Futurum-Requiem:2.6.60-GTNH:dev")
     runtimeOnlyNonPublishable(gtnhDev("ThaumicTinkerer"))
     runtimeOnlyNonPublishable(gtnhDev("OpenComputers"))
-    ["spark.jar", "OmniOcularUnofficial.jar"].each { jarName ->
-        def localMod = file("libs/${jarName}")
-        if (localMod.isFile()) {
-            runtimeOnlyNonPublishable(rfg.deobf(files(localMod)))
-        }
-    }
     runtimeOnlyNonPublishable(gtnhDev("ThaumicEnergistics"))
     runtimeOnlyNonPublishable(gtnhDev("MatterManipulator"))
     runtimeOnlyNonPublishable(gtnhDev("Universal-Singularities"))
