@@ -7,6 +7,18 @@ public enum BGEMachineList {
     BetterTSTNetherInterface,
     BetterTSTPreciseHighEnergyPhotonicQuantumMaster,
     SteamIndustrialElectrolyzer,
+    LatexBronze,
+    LatexSteel,
+    LatexLV,
+    LatexMV,
+    LatexHV,
+    LatexEV,
+    LatexIV,
+    LatexLuV,
+    LatexZPM,
+    LatexUV,
+    LatexUHV,
+    LatexUEV;
 
     private ItemStack stack;
 

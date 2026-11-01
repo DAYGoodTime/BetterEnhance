@@ -6,23 +6,18 @@ import com.day.betterexperience.api.BGEMachineList;
 import com.day.betterexperience.common.machine.multiblock.BetterTSTNetherInterface;
 import com.day.betterexperience.common.machine.multiblock.BetterTSTPreciseHighEnergyPhotonicQuantumMaster;
 import com.day.betterexperience.common.machine.multiblock.SteamIndustrialElectrolyzer;
+import com.day.betterexperience.common.machine.singleblock.ElectricLatex;
+import com.day.betterexperience.common.machine.singleblock.SteamLatexBronze;
+import com.day.betterexperience.common.machine.singleblock.SteamLatexSteel;
 
 import gregtech.api.GregTechAPI;
+import gregtech.api.enums.GTValues;
 
 public class MachineLoader {
 
     public static final int STARTER_ID = 32200;
-    public static final int MACHINE_COUNT = 3;
 
     public static void register() {
-        for (int id = STARTER_ID; id < STARTER_ID + MACHINE_COUNT; id++) {
-            if (id >= GregTechAPI.METATILEENTITIES.length) {
-                throw new IllegalArgumentException("BetterGTExperience machine ID outside GT5U registry: " + id);
-            }
-            if (GregTechAPI.METATILEENTITIES[id] != null) {
-                throw new IllegalStateException("BetterGTExperience approved machine ID is occupied: " + id);
-            }
-        }
         int id = STARTER_ID;
         BGEMachineList.BetterTSTNetherInterface.set(
             new BetterTSTNetherInterface(
@@ -41,8 +36,27 @@ public class MachineLoader {
                 "betterexperience.steam_industrial_electrolyzer",
                 StatCollector.translateToLocal("betterexperience.machine.steam_industrial_electrolyzer.name"))
                     .getStackForm(1));
-        if (id != STARTER_ID + MACHINE_COUNT) {
-            throw new IllegalStateException("BetterGTExperience machine count does not match registrations");
+        BGEMachineList.LatexBronze.set(
+            new SteamLatexBronze(
+                id++,
+                "betterexperience.latex.bronze",
+                StatCollector.translateToLocal("betterexperience.machine.latex.bronze.name")).getStackForm(1));
+        BGEMachineList.LatexSteel.set(
+            new SteamLatexSteel(
+                id++,
+                "betterexperience.latex.steel",
+                StatCollector.translateToLocal("betterexperience.machine.latex.steel.name")).getStackForm(1));
+        BGEMachineList[] electricLatex = { BGEMachineList.LatexLV, BGEMachineList.LatexMV, BGEMachineList.LatexHV,
+            BGEMachineList.LatexEV, BGEMachineList.LatexIV, BGEMachineList.LatexLuV, BGEMachineList.LatexZPM,
+            BGEMachineList.LatexUV, BGEMachineList.LatexUHV, BGEMachineList.LatexUEV };
+        for (int tier = 1; tier <= electricLatex.length; tier++) {
+            String tierName = GTValues.VN[tier];
+            electricLatex[tier - 1].set(
+                new ElectricLatex(
+                    id++,
+                    "betterexperience.latex." + tierName,
+                    StatCollector.translateToLocal("betterexperience.machine.latex.electric." + tier + ".name"),
+                    tier).getStackForm(1));
         }
     }
 }

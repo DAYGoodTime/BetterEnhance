@@ -44,3 +44,15 @@ betterexperience.steam.ui.overclock_count=超频次数
 betterexperience.steam.structure.missing_input_bus=缺少输入总线（蒸汽或普通）
 betterexperience.steam.structure.missing_output_bus=缺少输出总线（蒸汽或普通）
 
+betterexperience.machine.latex.bronze.name=青铜蒸汽过胶机
+betterexperience.machine.latex.steel.name=高压蒸汽过胶机
+betterexperience.machine.latex.electric.1.name=基础过胶机
+betterexperience.machine.latex.electric.2.name=进阶过胶机
+betterexperience.machine.latex.electric.3.name=进阶过胶机 II
+betterexperience.machine.latex.electric.4.name=进阶过胶机 III
+betterexperience.machine.latex.electric.5.name=进阶过胶机 IV
+betterexperience.machine.latex.electric.6.name=精英过胶机
+betterexperience.machine.latex.electric.7.name=精英过胶机 II
+betterexperience.machine.latex.electric.8.name=终极过胶机
+betterexperience.machine.latex.electric.9.name=史诗过胶机
+betterexperience.machine.latex.electric.10.name=史诗过胶机 II

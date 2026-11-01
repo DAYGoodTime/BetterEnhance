@@ -1,5 +1,6 @@
 package com.day.betterexperience;
 
+import com.day.betterexperience.registry.LatexRecipes;
 import com.day.betterexperience.registry.MachineLoader;
 
 import cpw.mods.fml.common.event.FMLInitializationEvent;
@@ -25,7 +26,9 @@ public class CommonProxy {
     // postInit "Handle interaction with other mods, complete your setup based on this." (Remove if not needed)
     public void postInit(FMLPostInitializationEvent event) {}
 
-    public void loadComplete(FMLLoadCompleteEvent event) {}
+    public void loadComplete(FMLLoadCompleteEvent event) {
+        LatexRecipes.register();
+    }
 
     // register server commands in this event handler (Remove if not needed)
     public void serverStarting(FMLServerStartingEvent event) {}
