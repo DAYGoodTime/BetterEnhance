@@ -46,8 +46,7 @@ public final class LatexMachineSupport {
 
     public static ITexture[] withAssemblerOverlay(ITexture casing, String face, boolean active) {
         String path = "basicmachines/assembler/OVERLAY_" + face + (active ? "_ACTIVE" : "");
-        return new ITexture[] { casing,
-            TextureFactory.of(Textures.BlockIcons.customOptional("gregtech", path)),
+        return new ITexture[] { casing, TextureFactory.of(Textures.BlockIcons.customOptional("gregtech", path)),
             TextureFactory.builder()
                 .addIcon(Textures.BlockIcons.customOptional("gregtech", path + "_GLOW"))
                 .glow()

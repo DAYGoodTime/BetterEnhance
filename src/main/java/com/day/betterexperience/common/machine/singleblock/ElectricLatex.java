@@ -43,7 +43,8 @@ public class ElectricLatex extends MTEBasicMachineWithRecipe {
             textures,
             SoundResource.GTCEU_LOOP_ASSEMBLER,
             SpecialEffects.NONE);
-        progressBarTexture = mRecipes.getFrontend().getUIProperties().progressBarTexture;
+        progressBarTexture = mRecipes.getFrontend()
+            .getUIProperties().progressBarTexture;
     }
 
     @Override

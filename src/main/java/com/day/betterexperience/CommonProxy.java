@@ -2,6 +2,7 @@ package com.day.betterexperience;
 
 import com.day.betterexperience.registry.LatexRecipes;
 import com.day.betterexperience.registry.MachineLoader;
+import com.day.betterexperience.registry.MachineRecipes;
 
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLLoadCompleteEvent;
@@ -28,6 +29,7 @@ public class CommonProxy {
 
     public void loadComplete(FMLLoadCompleteEvent event) {
         LatexRecipes.register();
+        MachineRecipes.register();
     }
 
     // register server commands in this event handler (Remove if not needed)

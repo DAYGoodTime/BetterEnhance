@@ -100,8 +100,7 @@ public class SteamLatexSteel extends MTEBasicMachineSteel {
 
     @Override
     public FluidTankInfo[] getTankInfo(ForgeDirection side) {
-        return new FluidTankInfo[] { super.getTankInfo(side)[0],
-            new FluidTankInfo(getFillableStack(), getCapacity()) };
+        return new FluidTankInfo[] { super.getTankInfo(side)[0], new FluidTankInfo(getFillableStack(), getCapacity()) };
     }
 
     @Override

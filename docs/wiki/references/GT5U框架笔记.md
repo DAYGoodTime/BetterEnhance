@@ -366,6 +366,13 @@ GTAuthors.buildAuthorsWithFormatSupplier(AuthorDynamic.author()))`.
 
 ## 13. GT5U API knowledge from recent work
 
+### BGTE 配方材料获取约定（GT5U 5.09.54.265 核对）
+
+- 本项目配方获取矿辞统一物品栈时，统一使用 `GTOreDictUnificator.get(OrePrefixes prefix, Object material, long amount)`，显式指定数量，不直接使用 `OrePrefixes.xxx.get(material)` 作为物品栈。
+- `OrePrefixes.get(Object)` 不接受数量，也不返回 `ItemStack`：传入 `Materials` 时返回 `ItemData`，其他对象返回拼接的矿辞名称。它是材料描述入口，不是带数量的物品栈获取 API；原生接受矿辞描述的场景与物品栈场景须区分。
+- 示例：`GTOreDictUnificator.get(OrePrefixes.plateDense, Materials.Netherite, 64)` 获取 64 个致密下界合金板；合成台图案材料使用数量 `1`，实际消耗数量由图案中对应字符的出现次数决定。
+- 调用时材料必须已注册，获取结果须有效；不得把缺失材料的 `null` 当作有效配方输入。核对源码为 `gregtech/api/enums/OrePrefixes.java#get(Object)` 与 `gregtech/api/util/GTOreDictUnificator.java#get(OrePrefixes, Object, long)`，不以旧笔记中的历史版本推断当前签名。
+
 * Upstream `MTEMultiBlockBase#getWailaBody` displays a running-mode line by reading `tag.getString("mode")`.
   To show a localized machine-mode name, write `tag.setString("mode", getMachineModeName(machineMode))`.
   Writing `tag.setInteger("mode", machineMode)` makes Waila show `运行模式: 0/1`.

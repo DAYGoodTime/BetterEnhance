@@ -1,3 +1,12 @@
+betterxeperience.config.general=General
+betterxeperience.machine.nether_interface.name=Nether Interface
+betterexperience.machine.nether_interface.origin=Enhanced TST Version
+betterxeperience.machine.nether_interface.energy_hatches=§aSupports multi-amp energy hatches and laser hatches.§7
+betterxeperience.machine.nether_interface.casing=Solid Steel Machine Casings (maximum, including replaceable hatch positions)
+betterxeperience.machine.nether_interface.frame=Obsidian Frames
+betterxeperience.machine.nether_interface.enhanced_obsidian=Mechanically Enhanced Obsidian (TST)
+betterxeperience.machine.nether_interface.obsidian=Obsidian
+
 betterexperience.machine.photonic_quantum_master.name=Precise High-Energy Photonic Quantum Master (Enhanced)
 betterexperience.machine.photonic_quantum_master.machine_type=Photon Controller / Laser Engraver
 betterexperience.machine.photonic_quantum_master.origin=Enhanced TST Precise High-Energy Photonic Quantum Master. Original author: Nxer.

@@ -10,7 +10,6 @@ import com.day.betterexperience.common.machine.singleblock.ElectricLatex;
 import com.day.betterexperience.common.machine.singleblock.SteamLatexBronze;
 import com.day.betterexperience.common.machine.singleblock.SteamLatexSteel;
 
-import gregtech.api.GregTechAPI;
 import gregtech.api.enums.GTValues;
 
 public class MachineLoader {

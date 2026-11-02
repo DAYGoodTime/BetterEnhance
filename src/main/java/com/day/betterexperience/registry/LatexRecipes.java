@@ -6,6 +6,7 @@ import gregtech.api.enums.ItemList;
 import gregtech.api.enums.Materials;
 import gregtech.api.enums.OrePrefixes;
 import gregtech.api.util.GTModHandler;
+import gregtech.api.util.GTOreDictUnificator;
 
 public final class LatexRecipes {
 
@@ -14,72 +15,60 @@ public final class LatexRecipes {
     public static void register() {
         addRecipe(
             BGEMachineList.LatexBronze,
-            OrePrefixes.plate.get(Materials.Rubber),
-            OrePrefixes.pipeMedium.get(Materials.Bronze),
+            GTOreDictUnificator.get(OrePrefixes.plate, Materials.Rubber, 1),
+            GTOreDictUnificator.get(OrePrefixes.pipeMedium, Materials.Bronze, 1),
             ItemList.Circuit_Parts_Vacuum_Tube,
             ItemList.Hull_Bronze_Bricks);
         addRecipe(
             BGEMachineList.LatexSteel,
-            OrePrefixes.plate.get(Materials.Rubber),
-            OrePrefixes.pipeMedium.get(Materials.Steel),
+            GTOreDictUnificator.get(OrePrefixes.plate, Materials.Rubber, 1),
+            GTOreDictUnificator.get(OrePrefixes.pipeMedium, Materials.Steel, 1),
             ItemList.Circuit_Parts_Vacuum_Tube,
             ItemList.Hull_HP_Bricks);
         addRecipe(
             BGEMachineList.LatexLV,
-            OrePrefixes.plate.get(Materials.Rubber),
+            GTOreDictUnificator.get(OrePrefixes.plate, Materials.Rubber, 1),
             ItemList.Electric_Pump_LV,
-            OrePrefixes.circuit.get(Materials.LV),
+            GTOreDictUnificator.get(OrePrefixes.circuit, Materials.LV, 1),
             ItemList.Casing_LV);
         addRecipe(
             BGEMachineList.LatexMV,
-            OrePrefixes.plateDense.get(Materials.Rubber),
+            GTOreDictUnificator.get(OrePrefixes.plateDense, Materials.Rubber, 1),
             ItemList.Electric_Pump_MV,
-            OrePrefixes.circuit.get(Materials.MV),
+            GTOreDictUnificator.get(OrePrefixes.circuit, Materials.MV, 1),
             ItemList.Casing_MV);
-        addSyntheticRubberRecipes(
-            BGEMachineList.LatexHV,
-            ItemList.Electric_Pump_HV,
-            Materials.HV,
-            ItemList.Casing_HV);
-        addSyntheticRubberRecipes(
-            BGEMachineList.LatexEV,
-            ItemList.Electric_Pump_EV,
-            Materials.EV,
-            ItemList.Casing_EV);
-        addSyntheticRubberRecipes(
-            BGEMachineList.LatexIV,
-            ItemList.Electric_Pump_IV,
-            Materials.IV,
-            ItemList.Casing_IV);
+        addSyntheticRubberRecipes(BGEMachineList.LatexHV, ItemList.Electric_Pump_HV, Materials.HV, ItemList.Casing_HV);
+        addSyntheticRubberRecipes(BGEMachineList.LatexEV, ItemList.Electric_Pump_EV, Materials.EV, ItemList.Casing_EV);
+        addSyntheticRubberRecipes(BGEMachineList.LatexIV, ItemList.Electric_Pump_IV, Materials.IV, ItemList.Casing_IV);
         addRecipe(
             BGEMachineList.LatexLuV,
-            OrePrefixes.plateDense.get(Materials.Polybenzimidazole),
+            GTOreDictUnificator.get(OrePrefixes.plateDense, Materials.Polybenzimidazole, 1),
             ItemList.Electric_Pump_LuV,
-            OrePrefixes.circuit.get(Materials.LuV),
+            GTOreDictUnificator.get(OrePrefixes.circuit, Materials.LuV, 1),
             ItemList.Casing_LuV);
         addRecipe(
             BGEMachineList.LatexZPM,
-            OrePrefixes.plateDense.get(Materials.Polybenzimidazole),
+            GTOreDictUnificator.get(OrePrefixes.plateDense, Materials.Polybenzimidazole, 1),
             ItemList.Electric_Pump_ZPM,
-            OrePrefixes.circuit.get(Materials.ZPM),
+            GTOreDictUnificator.get(OrePrefixes.circuit, Materials.ZPM, 1),
             ItemList.Casing_ZPM);
         addRecipe(
             BGEMachineList.LatexUV,
-            OrePrefixes.plateDense.get(Materials.Polybenzimidazole),
+            GTOreDictUnificator.get(OrePrefixes.plateDense, Materials.Polybenzimidazole, 1),
             ItemList.Electric_Pump_UV,
-            OrePrefixes.circuit.get(Materials.UV),
+            GTOreDictUnificator.get(OrePrefixes.circuit, Materials.UV, 1),
             ItemList.Casing_UV);
         addRecipe(
             BGEMachineList.LatexUHV,
-            OrePrefixes.plateDense.get(Materials.Polybenzimidazole),
+            GTOreDictUnificator.get(OrePrefixes.plateDense, Materials.Polybenzimidazole, 1),
             ItemList.Electric_Pump_UHV,
-            OrePrefixes.circuit.get(Materials.UHV),
+            GTOreDictUnificator.get(OrePrefixes.circuit, Materials.UHV, 1),
             ItemList.Casing_MAX);
         addRecipe(
             BGEMachineList.LatexUEV,
-            OrePrefixes.plateDense.get(Materials.Polybenzimidazole),
+            GTOreDictUnificator.get(OrePrefixes.plateDense, Materials.Polybenzimidazole, 1),
             ItemList.Electric_Pump_UEV,
-            OrePrefixes.circuit.get(Materials.UEV),
+            GTOreDictUnificator.get(OrePrefixes.circuit, Materials.UEV, 1),
             ItemList.Casing_UEV);
     }
 
@@ -87,15 +76,15 @@ public final class LatexRecipes {
         ItemList casing) {
         addRecipe(
             machine,
-            OrePrefixes.plateDense.get(Materials.RubberSilicone),
+            GTOreDictUnificator.get(OrePrefixes.plateDense, Materials.RubberSilicone, 1),
             pump,
-            OrePrefixes.circuit.get(circuitTier),
+            GTOreDictUnificator.get(OrePrefixes.circuit, circuitTier, 1),
             casing);
         addRecipe(
             machine,
-            OrePrefixes.plateDense.get(Materials.StyreneButadieneRubber),
+            GTOreDictUnificator.get(OrePrefixes.plateDense, Materials.StyreneButadieneRubber, 1),
             pump,
-            OrePrefixes.circuit.get(circuitTier),
+            GTOreDictUnificator.get(OrePrefixes.circuit, circuitTier, 1),
             casing);
     }
 

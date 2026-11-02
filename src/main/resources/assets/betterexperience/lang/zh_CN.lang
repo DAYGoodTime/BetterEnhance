@@ -1,3 +1,13 @@
+betterexperience.config.general=通用配置
+betterexperience.machine.nether_interface.name=地狱接口
+betterexperience.machine.nether_interface.origin=增强版 TST 地狱接口，原作者：Nxer。
+betterexperience.machine.nether_interface.info.0=最大支持并行为 2147483648
+betterexperience.machine.nether_interface.energy_hatches=§a支持 多A能源仓 激光仓§7
+betterexperience.machine.nether_interface.casing=坚固机械方块
+betterexperience.machine.nether_interface.frame=黑曜石框架
+betterexperience.machine.nether_interface.enhanced_obsidian=机械强化黑曜石（TST）
+betterexperience.machine.nether_interface.obsidian=黑曜石
+
 betterexperience.machine.photonic_quantum_master.name=精密高能光量子掌控者
 betterexperience.machine.photonic_quantum_master.machine_type=光子掌控者 / 激光蚀刻机
 betterexperience.machine.photonic_quantum_master.origin=增强版 TST 精密高能光量子掌控者，原作者：Nxer。
