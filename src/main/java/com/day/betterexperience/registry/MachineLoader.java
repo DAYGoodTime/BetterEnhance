@@ -6,10 +6,13 @@ import com.day.betterexperience.api.BGEMachineList;
 import com.day.betterexperience.common.machine.multiblock.BetterTSTNetherInterface;
 import com.day.betterexperience.common.machine.multiblock.BetterTSTPreciseHighEnergyPhotonicQuantumMaster;
 import com.day.betterexperience.common.machine.multiblock.SteamIndustrialElectrolyzer;
+import com.day.betterexperience.common.machine.singleblock.CellDestroyerElectrolyzer;
 import com.day.betterexperience.common.machine.singleblock.ElectricLatex;
 import com.day.betterexperience.common.machine.singleblock.SteamLatexBronze;
 import com.day.betterexperience.common.machine.singleblock.SteamLatexSteel;
 
+import cpw.mods.fml.common.Loader;
+import cpw.mods.fml.common.Optional;
 import gregtech.api.enums.GTValues;
 
 public class MachineLoader {
@@ -18,17 +21,11 @@ public class MachineLoader {
 
     public static void register() {
         int id = STARTER_ID;
-        BGEMachineList.BetterTSTNetherInterface.set(
-            new BetterTSTNetherInterface(
-                id++,
-                "betterexperience.nether_interface",
-                StatCollector.translateToLocal("betterexperience.machine.nether_interface.name")).getStackForm(1));
-        BGEMachineList.BetterTSTPreciseHighEnergyPhotonicQuantumMaster.set(
-            new BetterTSTPreciseHighEnergyPhotonicQuantumMaster(
-                id++,
-                "betterexperience.photonic_quantum_master",
-                StatCollector.translateToLocal("betterexperience.machine.photonic_quantum_master.name"))
-                    .getStackForm(1));
+        if (Loader.isModLoaded("TwistSpaceTechnology")) {
+            registerTSTMachines(id);
+        }
+        // Reserve the TST IDs even when it is absent to keep all other machine IDs stable.
+        id += 2;
         BGEMachineList.SteamIndustrialElectrolyzer.set(
             new SteamIndustrialElectrolyzer(
                 id++,
@@ -57,5 +54,34 @@ public class MachineLoader {
                     StatCollector.translateToLocal("betterexperience.machine.latex.electric." + tier + ".name"),
                     tier).getStackForm(1));
         }
+        BGEMachineList[] cellDestroyerElectrolyzers = { BGEMachineList.CellDestroyerElectrolyzerLV,
+            BGEMachineList.CellDestroyerElectrolyzerMV, BGEMachineList.CellDestroyerElectrolyzerHV,
+            BGEMachineList.CellDestroyerElectrolyzerEV };
+        String[] cellDestroyerRomanTiers = { "I", "II", "III", "IV" };
+        for (int tier = 1; tier <= cellDestroyerElectrolyzers.length; tier++) {
+            String tierName = GTValues.VN[tier];
+            cellDestroyerElectrolyzers[tier - 1].set(
+                new CellDestroyerElectrolyzer(
+                    id++,
+                    "betterexperience.cell_destroyer_electrolyzer." + tierName,
+                    StatCollector.translateToLocal("betterexperience.machine.cell_destroyer_electrolyzer.name") + " "
+                        + cellDestroyerRomanTiers[tier - 1],
+                    tier).getStackForm(1));
+        }
+    }
+
+    @Optional.Method(modid = "TwistSpaceTechnology")
+    private static void registerTSTMachines(int id) {
+        BGEMachineList.BetterTSTNetherInterface.set(
+            new BetterTSTNetherInterface(
+                id++,
+                "betterexperience.nether_interface",
+                StatCollector.translateToLocal("betterexperience.machine.nether_interface.name")).getStackForm(1));
+        BGEMachineList.BetterTSTPreciseHighEnergyPhotonicQuantumMaster.set(
+            new BetterTSTPreciseHighEnergyPhotonicQuantumMaster(
+                id,
+                "betterexperience.photonic_quantum_master",
+                StatCollector.translateToLocal("betterexperience.machine.photonic_quantum_master.name"))
+                    .getStackForm(1));
     }
 }

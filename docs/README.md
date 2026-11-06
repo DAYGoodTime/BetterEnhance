@@ -2,7 +2,9 @@
 本项目刚初始化，迁入的旧项目文档仅作为参考，不代表当前已实现功能。
 
 - [当前项目知识库](wiki/development/项目知识库.md)
+- [TST 可选加载、机器及配方注册](wiki/development/项目知识库.md#初始化与注册)
 - [蒸汽工业电解机与 Markdown Tooltip](wiki/development/项目知识库.md#蒸汽工业电解机)
+- [单元毁灭者电解机与真实多流体输出](wiki/development/项目知识库.md#单元毁灭者电解机)
 - [GTNL 参考与长整型输入消耗](wiki/references/GT-Not-Leisure参考索引.md#长整型输入消耗)
 - [GT 原生长整型并行产出与拆栈](wiki/references/GT-Not-Leisure参考索引.md#长整型并行产出)
 - [TST 本地与远程参考索引](wiki/references/TST参考索引.md)

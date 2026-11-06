@@ -18,7 +18,11 @@ public enum BGEMachineList {
     LatexZPM,
     LatexUV,
     LatexUHV,
-    LatexUEV;
+    LatexUEV,
+    CellDestroyerElectrolyzerLV,
+    CellDestroyerElectrolyzerMV,
+    CellDestroyerElectrolyzerHV,
+    CellDestroyerElectrolyzerEV;
 
     private ItemStack stack;
 

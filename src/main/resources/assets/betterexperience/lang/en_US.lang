@@ -65,3 +65,6 @@ betterexperience.machine.latex.electric.7.name=Elite L.A.T.E.X. II
 betterexperience.machine.latex.electric.8.name=Ultimate L.A.T.E.X.
 betterexperience.machine.latex.electric.9.name=Epic L.A.T.E.X.
 betterexperience.machine.latex.electric.10.name=Epic L.A.T.E.X. II
+
+betterexperience.machine.cell_destroyer_electrolyzer.name=Cell Destroyer Electrolyzer
+betterexperience.machine.cell_destroyer_electrolyzer.recipes=Uses the multiblock electrolyzer's cell-free recipes.

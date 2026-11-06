@@ -8,11 +8,15 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 
 import com.Nxer.TwistSpaceTechnology.common.GTCMItemList;
+import com.day.betterexperience.BetterGTExperience;
 import com.day.betterexperience.api.BGEMachineList;
 
+import cpw.mods.fml.common.Loader;
+import cpw.mods.fml.common.Optional;
 import gregtech.api.enums.GTValues;
 import gregtech.api.enums.ItemList;
 import gregtech.api.enums.Materials;
+import gregtech.api.enums.Mods;
 import gregtech.api.enums.OrePrefixes;
 import gregtech.api.recipe.RecipeMaps;
 import gregtech.api.util.GTModHandler;
@@ -26,6 +30,66 @@ public final class MachineRecipes {
     private MachineRecipes() {}
 
     public static void register() {
+        if (Loader.isModLoaded("TwistSpaceTechnology")) {
+            registerTSTRecipes();
+        }
+
+        // Steam Industrial Electrolyzer
+        GTModHandler.addCraftingRecipe(
+            BGEMachineList.SteamIndustrialElectrolyzer.get(1),
+            GTModHandler.RecipeBits.BITS,
+            new Object[] { "BGB", "WTW", "BWB", 'B', ItemList.Casing_BronzePlatedBricks, 'G',
+                new ItemStack(Blocks.glass), 'T', ItemList.Generator_Steam_Turbine_LV, 'W',
+                GTOreDictUnificator.get(OrePrefixes.wireGt01, Materials.Gold, 1) });
+
+        registerCellDestroyerElectrolyzerRecipes();
+    }
+
+    private static void registerCellDestroyerElectrolyzerRecipes() {
+        BGEMachineList[] outputs = { BGEMachineList.CellDestroyerElectrolyzerLV,
+            BGEMachineList.CellDestroyerElectrolyzerMV, BGEMachineList.CellDestroyerElectrolyzerHV,
+            BGEMachineList.CellDestroyerElectrolyzerEV };
+        ItemStack[] tanks = { GTModHandler.getModItem(Mods.BuildCraftFactory.ID, "tankBlock", 1),
+            GTModHandler.getModItem(Mods.IronTanks.ID, "copperTank", 1),
+            GTModHandler.getModItem(Mods.IronTanks.ID, "ironTank", 1),
+            GTModHandler.getModItem(Mods.IronTanks.ID, "goldTank", 1) };
+        ItemList[] electrolyzers = { ItemList.Machine_LV_Electrolyzer, ItemList.Machine_MV_Electrolyzer,
+            ItemList.Machine_HV_Electrolyzer, ItemList.Machine_EV_Electrolyzer };
+        Materials[] circuits = { Materials.LV, Materials.MV, Materials.HV, Materials.EV };
+        Materials[] cables = { Materials.Tin, Materials.AnyCopper, Materials.Gold, Materials.Aluminium };
+        ItemStack glass = ItemList.ReinforcedGlass.get(1);
+
+        for (int i = 0; i < outputs.length; i++) {
+            String tierName = GTValues.VN[i + 1];
+            ItemStack electrolyzer = electrolyzers[i].get(1);
+            if (tanks[i] == null || tanks[i].getItem() == null
+                || glass == null
+                || glass.getItem() == null
+                || electrolyzer == null
+                || electrolyzer.getItem() == null) {
+                BetterGTExperience.LOG.error(
+                    "Cannot register Cell Destroyer Electrolyzer {} crafting recipe: missing tank={}, reinforcedGlass={}, electrolyzer={}. Check BuildCraft Factory, Iron Tanks and GregTech.",
+                    tierName,
+                    tanks[i],
+                    glass,
+                    electrolyzer);
+                continue;
+            }
+            boolean registered = GTModHandler.addCraftingRecipe(
+                outputs[i].get(1),
+                GTModHandler.RecipeBits.BITS,
+                new Object[] { "TGT", "TMT", "CWC", 'T', tanks[i], 'G', glass, 'M', electrolyzer, 'C',
+                    OrePrefixes.circuit.get(circuits[i]), 'W', OrePrefixes.cableGt16.get(cables[i]) });
+            if (registered) {
+                BetterGTExperience.LOG.info("Registered Cell Destroyer Electrolyzer {} crafting recipe", tierName);
+            } else {
+                BetterGTExperience.LOG.error("GT5U rejected Cell Destroyer Electrolyzer {} crafting recipe", tierName);
+            }
+        }
+    }
+
+    @Optional.Method(modid = "TwistSpaceTechnology")
+    private static void registerTSTRecipes() {
         // Enhanced Nether Interface
         GTValues.RA.stdBuilder()
             .metadata(GTRecipeConstants.RESEARCH_ITEM, GTCMItemList.NetherInterface.get(1))
@@ -56,12 +120,5 @@ public final class MachineRecipes {
             .eut(RECIPE_UHV)
             .addTo(RecipeMaps.assemblerRecipes);
 
-        // Steam Industrial Electrolyzer
-        GTModHandler.addCraftingRecipe(
-            BGEMachineList.SteamIndustrialElectrolyzer.get(1),
-            GTModHandler.RecipeBits.BITS,
-            new Object[] { "BGB", "WTW", "BWB", 'B', ItemList.Casing_BronzePlatedBricks, 'G',
-                new ItemStack(Blocks.glass), 'T', ItemList.Generator_Steam_Turbine_LV, 'W',
-                GTOreDictUnificator.get(OrePrefixes.wireGt01, Materials.Gold, 1) });
     }
 }

@@ -8,7 +8,7 @@
 
 - 本地只读参考：`D:\DEV\mcmod\Twist-Space-Technology-Mod`。
 - 远程仓库：[Nxer/Twist-Space-Technology-Mod](https://github.com/Nxer/Twist-Space-Technology-Mod)。本地不可访问时使用远程源码，并核对版本。
-- 本项目明确依赖 TST `0.8.0-RC2.6:dev`；本地或远程工作区不代表已解析依赖，类、方法和语言键均以实际依赖 JAR 与对应源码为准。
+- 本项目将 TST 作为可选运行集成，开发 classpath 仍保留 TST；本地 Maven 坐标与加载条件见[项目知识库](../development/项目知识库.md#技术与依赖)。本地或远程工作区不代表已解析依赖，类、方法和语言键均以实际依赖 JAR 与对应源码为准。
 - 不修改参考仓库、不运行其构建，不自动复用机器 ID、注册名或确定新的平衡数值。复制实现前核对许可证与署名要求，当前移植边界见[第三方声明](../../../THIRD_PARTY_NOTICES.md)。
 
 ## 地狱接口

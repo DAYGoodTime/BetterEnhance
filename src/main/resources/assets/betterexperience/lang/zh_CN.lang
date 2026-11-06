@@ -66,3 +66,6 @@ betterexperience.machine.latex.electric.7.name=精英过胶机 II
 betterexperience.machine.latex.electric.8.name=终极过胶机
 betterexperience.machine.latex.electric.9.name=史诗过胶机
 betterexperience.machine.latex.electric.10.name=史诗过胶机 II
+
+betterexperience.machine.cell_destroyer_electrolyzer.name=单元毁灭者电解机
+betterexperience.machine.cell_destroyer_electrolyzer.recipes=使用多方块电解机的无单元配方。
