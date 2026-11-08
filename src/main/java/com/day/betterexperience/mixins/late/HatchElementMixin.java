@@ -1,0 +1,27 @@
+package com.day.betterexperience.mixins.late;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+
+import com.day.betterexperience.common.machine.hatch.MEOutputAssembly;
+
+import gregtech.api.enums.HatchElement;
+import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
+
+@Mixin(value = HatchElement.class, remap = false)
+public abstract class HatchElementMixin {
+
+    @Inject(method = "mteClasses", at = @At("RETURN"), cancellable = true)
+    private void betterexperience$acceptOutputAssembly(
+        CallbackInfoReturnable<List<? extends Class<? extends IMetaTileEntity>>> cir) {
+        if ((Object) this != HatchElement.OutputBus) return;
+        List<Class<? extends IMetaTileEntity>> classes = new ArrayList<>(cir.getReturnValue());
+        classes.add(MEOutputAssembly.class);
+        cir.setReturnValue(classes);
+    }
+}

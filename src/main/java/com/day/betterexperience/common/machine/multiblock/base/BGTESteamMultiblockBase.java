@@ -19,6 +19,7 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.jetbrains.annotations.NotNull;
 
 import com.day.betterexperience.client.gui.BGTESteamMultiblockGui;
+import com.day.betterexperience.common.machine.hatch.MEOutputAssembly;
 import com.google.common.collect.ImmutableList;
 import com.gtnewhorizon.structurelib.alignment.constructable.ISurvivalConstructable;
 import com.gtnewhorizon.structurelib.structure.IStructureElement;
@@ -179,7 +180,7 @@ public abstract class BGTESteamMultiblockBase<T extends BGTESteamMultiblockBase<
         if (mSteamInputs.isEmpty() && mInputBusses.isEmpty()) {
             errors.add(StructureErrors.of("betterexperience.steam.structure.missing_input_bus"));
         }
-        if (mSteamOutputs.isEmpty() && mOutputBusses.isEmpty()) {
+        if (getOutputBusses().isEmpty()) {
             errors.add(StructureErrors.of("betterexperience.steam.structure.missing_output_bus"));
         }
         if (checkedTier == SteamMachineTier.UNFORMED) {
@@ -239,6 +240,13 @@ public abstract class BGTESteamMultiblockBase<T extends BGTESteamMultiblockBase<
     public List<IOutputBus> getOutputBusses() {
         List<IOutputBus> outputs = super.getOutputBusses();
         for (var bus : validMTEList(mOutputBusses)) outputs.add(bus);
+        // GT's steam override bypasses MTEMultiBlockBase's output-view injection.
+        // Keep the real hatch in the fluid list and expose its item interface for checks and ejection.
+        for (var hatch : validMTEList(mOutputHatches)) {
+            if (hatch instanceof MEOutputAssembly assembly && !outputs.contains(assembly.getItemOutput())) {
+                outputs.add(assembly.getItemOutput());
+            }
+        }
         return outputs;
     }
 

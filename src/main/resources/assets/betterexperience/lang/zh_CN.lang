@@ -69,3 +69,17 @@ betterexperience.machine.latex.electric.10.name=史诗过胶机 II
 
 betterexperience.machine.cell_destroyer_electrolyzer.name=单元毁灭者电解机
 betterexperience.machine.cell_destroyer_electrolyzer.recipes=使用多方块电解机的无单元配方。
+
+betterexperience.machine.me_output_assembly.name=ME输出总成
+betterexperience.machine.me_output_assembly.desc.0=用胶水把输出仓和输出总线黏在一起不就好了
+betterexperience.machine.me_output_assembly.fluids=放入流体元件
+betterexperience.machine.me_output_assembly.items=放入物品元件
+betterexperience.machine.me_output_assembly.cache=缓存：%s / %s
+betterexperience.machine.me_output_assembly.item_cache=物品缓存：%s / %s
+betterexperience.machine.me_output_assembly.fluid_cache=流体缓存：%s / %s
+betterexperience.machine.me_output_assembly.items_cache_title=物品缓存
+betterexperience.machine.me_output_assembly.fluids_cache_title=流体缓存
+betterexperience.machine.me_output_assembly.fluid_cache.cell=流体存储元件缓存（%s 类）：
+betterexperience.machine.me_output_assembly.item_cache.empty=物品缓存为空
+betterexperience.machine.me_output_assembly.item_cache.cell=物品存储元件缓存（%s 类）：
+betterexperience.machine.me_output_assembly.item_cache.more=另有 %s 类物品未显示

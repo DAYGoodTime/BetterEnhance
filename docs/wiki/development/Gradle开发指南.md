@@ -53,6 +53,7 @@ JDK 25 是构建运行环境，Jabel 保持 Java 8 字节码目标，不等于�
 | 旧 `thaumcraftneiplugin` 初始化报 `NoSuchMethodError: func_77625_d(int)` | TCNEIAdditions／ThaumicTinkerer 的传递依赖带入未转换的 CurseMaven 包。`dependencies.gradle` 显式使用 `runtimeOnlyNonPublishable(rfg.deobf("curse.maven:thaumcraft-nei-plugin-225095:2241913"))`，由 RFG 对同一模块执行 SRG → MCP 转换；不直接修改缓存 JAR，也不删除插件 |
 | CropsNH 后初始化缺少 `portablejim/bbw/core/conversion/ICustomMapping` | CropsNH `2.0.134` 的 BetterBuildersWands 兼容处理器在缺少该模组时仍触发 API 类解析。开发运行依赖使用 `runtimeOnlyNonPublishable(gtnhDev("BetterBuildersWands"))` 补齐 `dev` 包；当前清单解析为 `0.13.12-GTNH`，无需修改 CropsNH 或伪造接口 |
 | 配置缓存重新计算 | 文件、Git 状态或动态插件版本缓存变化会触发重算，本身不等于构建失败 |
+| 开发客户端已选中文，GT 名称和 ME WAILA 仍有英文 | 当前 `.265` 日志显示 `User lang is zh_CN` 后因缺少 `run/client/GregTech_zh_CN.lang` 回退 `GregTech.lang`；旧式动态名称需要与依赖版本匹配的中文 Forge 配置格式文件。另有标准资源缺键：GT JAR 中 `assets/gregtech/lang/zh_CN.lang` 存在，但不含 ME WAILA 语言键；该部分需由中文资源包的同名资源路径补齐并启用。两种格式不能互换，不能把英文文件改名当作汉化；本次未安装外部汉化或修改缓存 JAR |
 | `runServer` 报 `Minecraft EULA not accepted!` | 首次运行 `run/server` 需确认联机模式与 EULA；可在启动时向标准输入依次传入 `y`，或预先放置 `eula.txt`（`eula=true`），不通过修改构建脚本绕过 |
 
 插件更新提示、Spotless 的 `indentWithSpaces` 弃用与 Eclipse JDT 版本提示不等于构建失败；以任务结果和退出码判断，不因提示自动升级构建配置。历次故障与验证经过不在正文重复累积。

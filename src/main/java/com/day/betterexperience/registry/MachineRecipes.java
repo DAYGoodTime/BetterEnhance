@@ -1,5 +1,6 @@
 package com.day.betterexperience.registry;
 
+import static gregtech.api.enums.TierEU.RECIPE_HV;
 import static gregtech.api.enums.TierEU.RECIPE_UHV;
 import static gregtech.api.enums.TierEU.RECIPE_ZPM;
 import static gregtech.api.util.GTRecipeBuilder.SECONDS;
@@ -43,6 +44,17 @@ public final class MachineRecipes {
                 GTOreDictUnificator.get(OrePrefixes.wireGt01, Materials.Gold, 1) });
 
         registerCellDestroyerElectrolyzerRecipes();
+        registerMEOutputAssemblyRecipe();
+    }
+
+    private static void registerMEOutputAssemblyRecipe() {
+        GTValues.RA.stdBuilder()
+            .itemInputs(ItemList.Hatch_Output_Bus_ME.get(1), ItemList.Hatch_Output_ME.get(1))
+            .fluidInputs(Materials.GlueAdvanced.getFluid(5_000))
+            .itemOutputs(BGEMachineList.MEOutputAssembly.get(1))
+            .duration(20 * SECONDS)
+            .eut(RECIPE_HV)
+            .addTo(RecipeMaps.assemblerRecipes);
     }
 
     private static void registerCellDestroyerElectrolyzerRecipes() {

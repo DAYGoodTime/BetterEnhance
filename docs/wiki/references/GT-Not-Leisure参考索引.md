@@ -96,6 +96,15 @@
 
 蒸汽输入分离／批处理补全参考 `J/common/machine/multiMachineBase/SteamMultiMachineBase.java` 的 `supportsInputSeparation`、`supportsBatchMode`、`getDefaultInputSeparationMode` 与 `doCheckRecipe`：采用默认不分离、普通／蒸汽总线逐仓检查及按颜色共享流体的思路。GT5U `.265` 的普通分离路径仍不遍历蒸汽总线，本项目通过 `checkRecipeForCustomHatches` 补充，不复制 GTNL 整份配方循环；原生合成缓存优先级、普通总线检查、MUI2 同步、NBT 和批处理器继续复用 GT。未复制参考源码或引入 GTNL 处理器。
 
+### ME输出总成与蒸汽输出接口
+
+- 阅读 `J/common/machine/multiMachineBase/SteamMultiMachineBase.java#getOutputBusses()` 的普通／蒸汽总线集合，以及 `J/common/machine/hatch/OutputBusMEProxy.java` 的原生 ME provider 继承与实例构造；在 `J/common/gui/modularui/` 的输出 GUI 文件中未检索到直接对应的双输出排版。配方材料引用核对 `J/common/recipe/gregtech/AssemblerRecipes.java`。只采用接口分工与枚举材料引用思路，不复制 GTNL 的代理仓机制、自有配方 Builder、数值或资源。
+- 本项目当前 `build/elytra_conventions/2.9.0.json` 指定 GT5U `5.09.54.265`、MUI2 `2.3.94-1.7.10`；本轮按对应缓存 sources JAR 核对 `MTESteamMultiBlockBase`、`MTEMultiBlockBase`、`HatchElement`、ME 仓口 GUI、`Materials`、`ItemList` 及 MUI2 `Flow`／`TextWidget`，未重新解析依赖。Context7 仅提供原生缓存 provider 的一般信息，不替代本地版本签名。
+- 上游蒸汽基类重写输出总线 getter，绕过普通多方块基类上的注入。本项目在自身蒸汽层从有效流体仓集合补入总成物品接口视图，并用同一输出列表检查成型；不改动只读 GTNL 或扩大对附属模组自定义机器的兼容承诺。
+- WAILA 核对 GTNL `OutputBusMEProxy.java`／`OutputHatchMEProxy.java` 的父类调用，以及 GT5U `.265` 的 `MTEHatchOutputBusME`／`MTEHatchOutputME`、`MTEHatchOutputMEBase` 和 `GTWaila`。两类 provider 使用相同的 WAILA 字段名，原生 `WailaHelper` 直接读取根节点；本项目保留根节点流体信息，将物品 provider 的原生序列化结果隔离到子节点，并按原生物品格式渲染普通缓存及高级存储元件明细，不以物品栈的 `int stackSize` 代替缓存的 `long Amount`。
+- 本地 GT5U `.265` sources JAR 的 `assets/gregtech/lang/zh_CN.lang` 未包含物品缓存空状态、元件标题及省略提示的原生语言键；本项目为新增物品提示使用自己的中英语言键，不全局覆盖 GT 语言资源。
+- WAILA 普通正文将流体与物品容量放在连续的独立行，再依次显示流体缓存明细、物品缓存明细和 GT 父类原生“刷新至 ME”提示；仅移动原生提示位置，不拼接物品刷新周期或倒计时，不并排显示。高级正文保留父类流体存储元件段落，紧接物品元件段落。GUI 的控件行只对齐行内控件；MUI2 `.94` 的 `IPositioned.verticalCenter()` 实际设置 `topRel(0.5f)`，`Flow.buildWrappedFlows()` 会忽略主轴位置已固定的子元素，因此不能用它把两条控制行放入纵向 Flow。
+
 ### 单方块多流体输出
 
 - 单元毁灭者电解机先在 `J/common/machine/basicMachine/` 检索电解机、离心机及多流体关键词，并在 `J/common/machine/` 检索单方块基类和多流体缓冲入口，未定位到可直接复用的多流体单方块实现。阅读 `Replicator.java` 的 `newMetaEntity`、`checkRecipe`、`buildUI` 和 `GTNLBasicMachineGui.java` 的原生 GUI 继承方式，只采用扩展点组织，不复制其复制物品机制、数值、纹理或 GTNL 标识。

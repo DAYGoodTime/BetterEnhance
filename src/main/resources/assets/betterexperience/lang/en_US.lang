@@ -68,3 +68,17 @@ betterexperience.machine.latex.electric.10.name=Epic L.A.T.E.X. II
 
 betterexperience.machine.cell_destroyer_electrolyzer.name=Cell Destroyer Electrolyzer
 betterexperience.machine.cell_destroyer_electrolyzer.recipes=Uses the multiblock electrolyzer's cell-free recipes.
+
+betterexperience.machine.me_output_assembly.name=ME Output Assembly
+betterexperience.machine.me_output_assembly.desc.0=Outputs items and fluids through one ME network connection.
+betterexperience.machine.me_output_assembly.fluids=Fluid output
+betterexperience.machine.me_output_assembly.items=Item output
+betterexperience.machine.me_output_assembly.cache=Cache: %s / %s
+betterexperience.machine.me_output_assembly.item_cache=Item cache: %s / %s
+betterexperience.machine.me_output_assembly.fluid_cache=Fluid cache: %s / %s
+betterexperience.machine.me_output_assembly.items_cache_title=Item cache
+betterexperience.machine.me_output_assembly.fluids_cache_title=Fluid cache
+betterexperience.machine.me_output_assembly.fluid_cache.cell=Fluid storage cell - cached fluid types: %s
+betterexperience.machine.me_output_assembly.item_cache.empty=No cached items
+betterexperience.machine.me_output_assembly.item_cache.cell=Item storage cell - cached item types: %s
+betterexperience.machine.me_output_assembly.item_cache.more=Additional item types: %s

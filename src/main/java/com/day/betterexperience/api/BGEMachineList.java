@@ -22,7 +22,8 @@ public enum BGEMachineList {
     CellDestroyerElectrolyzerLV,
     CellDestroyerElectrolyzerMV,
     CellDestroyerElectrolyzerHV,
-    CellDestroyerElectrolyzerEV;
+    CellDestroyerElectrolyzerEV,
+    MEOutputAssembly;
 
     private ItemStack stack;
 

@@ -3,6 +3,7 @@ package com.day.betterexperience.registry;
 import net.minecraft.util.StatCollector;
 
 import com.day.betterexperience.api.BGEMachineList;
+import com.day.betterexperience.common.machine.hatch.MEOutputAssembly;
 import com.day.betterexperience.common.machine.multiblock.BetterTSTNetherInterface;
 import com.day.betterexperience.common.machine.multiblock.BetterTSTPreciseHighEnergyPhotonicQuantumMaster;
 import com.day.betterexperience.common.machine.multiblock.SteamIndustrialElectrolyzer;
@@ -68,6 +69,12 @@ public class MachineLoader {
                         + cellDestroyerRomanTiers[tier - 1],
                     tier).getStackForm(1));
         }
+        // Append only: user-approved ID 32219, including when TST is absent.
+        BGEMachineList.MEOutputAssembly.set(
+            new MEOutputAssembly(
+                id++,
+                "betterexperience.me_output_assembly",
+                StatCollector.translateToLocal("betterexperience.machine.me_output_assembly.name")).getStackForm(1));
     }
 
     @Optional.Method(modid = "TwistSpaceTechnology")
