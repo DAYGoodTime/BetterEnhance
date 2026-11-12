@@ -8,7 +8,9 @@ import com.day.betterexperience.common.machine.multiblock.BetterTSTNetherInterfa
 import com.day.betterexperience.common.machine.multiblock.BetterTSTPreciseHighEnergyPhotonicQuantumMaster;
 import com.day.betterexperience.common.machine.multiblock.SteamIndustrialElectrolyzer;
 import com.day.betterexperience.common.machine.singleblock.CellDestroyerElectrolyzer;
+import com.day.betterexperience.common.machine.singleblock.CellDestroyerMixer;
 import com.day.betterexperience.common.machine.singleblock.ElectricLatex;
+import com.day.betterexperience.common.machine.singleblock.SteamCellDestroyerMixer;
 import com.day.betterexperience.common.machine.singleblock.SteamLatexBronze;
 import com.day.betterexperience.common.machine.singleblock.SteamLatexSteel;
 
@@ -25,7 +27,6 @@ public class MachineLoader {
         if (Loader.isModLoaded("TwistSpaceTechnology")) {
             registerTSTMachines(id);
         }
-        // Reserve the TST IDs even when it is absent to keep all other machine IDs stable.
         id += 2;
         BGEMachineList.SteamIndustrialElectrolyzer.set(
             new SteamIndustrialElectrolyzer(
@@ -75,6 +76,30 @@ public class MachineLoader {
                 id++,
                 "betterexperience.me_output_assembly",
                 StatCollector.translateToLocal("betterexperience.machine.me_output_assembly.name")).getStackForm(1));
+        // User-approved append-only IDs 32220-32225; never shift existing registrations.
+        BGEMachineList.CellDestroyerMixerBronze.set(
+            new SteamCellDestroyerMixer(
+                id++,
+                "betterexperience.cell_destroyer_mixer.bronze",
+                StatCollector.translateToLocal("betterexperience.machine.cell_destroyer_mixer.bronze.name"),
+                false).getStackForm(1));
+        BGEMachineList.CellDestroyerMixerSteel.set(
+            new SteamCellDestroyerMixer(
+                id++,
+                "betterexperience.cell_destroyer_mixer.steel",
+                StatCollector.translateToLocal("betterexperience.machine.cell_destroyer_mixer.steel.name"),
+                true).getStackForm(1));
+        BGEMachineList[] mixers = { BGEMachineList.CellDestroyerMixerLV, BGEMachineList.CellDestroyerMixerMV,
+            BGEMachineList.CellDestroyerMixerHV, BGEMachineList.CellDestroyerMixerEV };
+        for (int tier = 1; tier <= mixers.length; tier++) {
+            mixers[tier - 1].set(
+                new CellDestroyerMixer(
+                    id++,
+                    "betterexperience.cell_destroyer_mixer." + GTValues.VN[tier],
+                    StatCollector.translateToLocal("betterexperience.machine.cell_destroyer_mixer.name") + " "
+                        + cellDestroyerRomanTiers[tier - 1],
+                    tier).getStackForm(1));
+        }
     }
 
     @Optional.Method(modid = "TwistSpaceTechnology")

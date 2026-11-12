@@ -5,6 +5,7 @@
 - [TST 可选加载、机器及配方注册](wiki/development/项目知识库.md#初始化与注册)
 - [蒸汽工业电解机与 Markdown Tooltip](wiki/development/项目知识库.md#蒸汽工业电解机)
 - [单元毁灭者电解机与真实多流体输出](wiki/development/项目知识库.md#单元毁灭者电解机)
+- [单元毁灭者搅拌机：蒸汽至 EV 与真实多流体输入／输出](wiki/development/项目知识库.md#单元毁灭者搅拌机)
 - [ME输出总成：界面、WAILA、制造配方与蒸汽机识别](wiki/development/项目知识库.md#me输出总成)；[GT 中文资源缺失排障](wiki/development/Gradle开发指南.md#排障要点)
 - [GTNL 参考与长整型输入消耗](wiki/references/GT-Not-Leisure参考索引.md#长整型输入消耗)
 - [GT 原生长整型并行产出与拆栈](wiki/references/GT-Not-Leisure参考索引.md#长整型并行产出)

@@ -67,6 +67,7 @@
 - 换热类型组织：`J/utils/enums/SteamTypes.java` 只采用组织思路，不复用其蒸汽体系、倍率或自有 API。
 - 不迁入参考库的自有配方工具类、`RecipeBuilder` 变体或工具箱扩展。
 - 单元毁灭者电解机制造配方参考 `J/common/recipe/gtnl/CraftingTableRecipes.java` 的 `LargeCircuitAssembler` 合成台注册：采用原生 `GTModHandler.addCraftingRecipe`、机器枚举及等级电路矿辞描述，不复制配方内容。包裹线缆材质按本项目 GT5U `5.09.54.265` 缓存源码 `MTERecipeLoader.registerElectrolyser()` 与 `GTModHandler.addMachineCraftingRecipe()` 的 `WIRE` 映射核对，改用 `cableGt16`；不采用电极用的裸金／银／琥珀金／铂线。
+- 单元毁灭者搅拌机制造配方同样参考上述 `CraftingTableRecipes.java` 的原生注册与等级电路矿辞写法；材料及格子排列完全按用户指定，不复制 GTNL 配方、资源或 ID。搅拌机和砖砌外壳枚举、合成材料转换按本项目 GT5U `5.09.54.265` 缓存源码 `ItemList`／`GTModHandler` 核对；储罐沿用本项目电解机配方，蒸汽外壳沿用 `LatexRecipes`，不引入 GTNL 自有 API 或依赖。
 
 ### 长整型输入消耗
 
@@ -87,6 +88,7 @@
 
 ### Tooltip 与仓口
 
+- 机器署名参考 `J/loader/MachineLoader.java` 注册后调用 `J/utils/text/AnimatedTooltipHandler.java#addItemTooltip` 的物品级附加方式。本项目不复制其自有工具类，直接使用 GTNHLib `0.11.54` 的 `AnimatedTooltipHandler.addItemTooltip(ItemStack, Supplier<String>)`，在客户端初始化完成机器注册后遍历已绑定的 `BGEMachineList`。当前 `2.9.0` 清单指定的 GT5U `5.09.54.265` 中，`toolTipFinisher(String...)` 仅为二进制兼容保留，作者参数明确被忽略；无参收尾不承担署名功能。API 按缓存 sources JAR 核对，未重新解析依赖。
 - 结构／仓口提示组织：`NuclearReactor.java`、`wireless/FastNeutronBreederReactor.java`；主题分隔与分组写法：`WhiteNightGenerator.java`。
 - 编号语言键与逐条 `addInfo`：`SiphonTurbine.createTooltip()`。
 - 解析受限的 `SiphonTurbineGui` 同步显示方式仅参考实现思路，本项目沿用既有 info 接口。以上签名均以本项目实际依赖为准，不复制数值、资源或扩展基类。
@@ -111,6 +113,9 @@
 - 本项目按既有 `ElectricLatex.java` 扩展 GT5U `.265` 的 `MTEBasicMachineWithRecipe`；`MTEIndustrialElectrolyzer.getRecipeMap()` 确认为 `RecipeMaps.electrolyzerNonCellRecipes`，配方池最多 6 项物品和 6 项流体输出。GT 原生 `MTEBasicMachine` 的 `canOutput`、`checkRecipe`、`onPostTick` 仍仅处理第 0 项流体，`MTEBasicMachineBaseGui` 也只建立一个流体输出格，因此不能只改配方池和 UI 的数量。
 - 本项目自行增加六个输出储槽及待产物数组，复用原生单方块的配方检查、概率第 0 项结果、超频与完成回调，补充全输出空间校验、剩余产物概率、NBT、按类型／模拟抽取和自动输出轮询；独立 MUI2 GUI 将六格分别绑定真实储槽。离心机槽位覆盖层、电解机进度条及机器外观均直接引用 GT 资源，不复制 GTNL 源码或资源。
 - API 以本地 `2.9.0` 清单指定的 `5.09.54.265` sources JAR 核对；Context7 只查得配方池的一般组织说明，未提供本版本多流体单方块 API，未用其 master 分支示例替代缓存签名，也未重新解析依赖。
+
+- 单元毁灭者搅拌机本轮在 `J/common/machine/basicMachine/` 按 Mixer、多流体、配方检查及 GUI 关键词检索，未找到可直接复用的多流体单方块搅拌机。阅读 `Replicator.java` 的实例重建／配方／GUI 扩展点，以及 `SteamAssemblerBronze.java` 的原生蒸汽基类和纹理组织；只借鉴扩展方式，不复制源码、资源或数值。另核对 `J/common/machine/multiblock/steam/LargeSteamMixer.java` 的配方池、等级与 Tooltip；当前只读仓库该类使用语言键，历史路径 `R/lang/zh_CN/tooltip/large-steam-mixer.md` 本轮不存在，不能当作已阅读的 Markdown。
+- 本机多流体机制由本项目实现，GT5U `.265` 的 `MTEIndustrialMixer` 确认使用 `mixerNonCellRecipes`，配方池上限为 9／9 物品、6／6 流体；单方块原生配方检查仍只传入单一流体，因此必须同时补齐完整输入数组、真实输出储槽、配方提交、NBT 和流体接口，而非只更换 GUI。蒸汽机沿用原生青铜／钢超频描述器和排气，不采用 GTNL 多方块的并行、升级齿轮或速度公式。
 
 ### 无线与电网接入
 

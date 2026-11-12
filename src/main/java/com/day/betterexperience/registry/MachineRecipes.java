@@ -44,6 +44,7 @@ public final class MachineRecipes {
                 GTOreDictUnificator.get(OrePrefixes.wireGt01, Materials.Gold, 1) });
 
         registerCellDestroyerElectrolyzerRecipes();
+        registerCellDestroyerMixerRecipes();
         registerMEOutputAssemblyRecipe();
     }
 
@@ -97,6 +98,71 @@ public final class MachineRecipes {
             } else {
                 BetterGTExperience.LOG.error("GT5U rejected Cell Destroyer Electrolyzer {} crafting recipe", tierName);
             }
+        }
+    }
+
+    private static void registerCellDestroyerMixerRecipes() {
+        BGEMachineList[] outputs = { BGEMachineList.CellDestroyerMixerLV, BGEMachineList.CellDestroyerMixerMV,
+            BGEMachineList.CellDestroyerMixerHV, BGEMachineList.CellDestroyerMixerEV };
+        ItemStack[] tanks = { GTModHandler.getModItem(Mods.BuildCraftFactory.ID, "tankBlock", 1),
+            GTModHandler.getModItem(Mods.IronTanks.ID, "copperTank", 1),
+            GTModHandler.getModItem(Mods.IronTanks.ID, "ironTank", 1),
+            GTModHandler.getModItem(Mods.IronTanks.ID, "goldTank", 1) };
+        ItemList[] mixers = { ItemList.Machine_LV_Mixer, ItemList.Machine_MV_Mixer, ItemList.Machine_HV_Mixer,
+            ItemList.Machine_EV_Mixer };
+        Materials[] circuits = { Materials.LV, Materials.MV, Materials.HV, Materials.EV };
+        Materials[] rotors = { Materials.Tin, Materials.Bronze, Materials.Steel, Materials.StainlessSteel };
+
+        for (int i = 0; i < outputs.length; i++) {
+            addCellDestroyerMixerRecipe(
+                outputs[i],
+                GTValues.VN[i + 1],
+                tanks[i],
+                rotors[i],
+                mixers[i].get(1),
+                OrePrefixes.circuit.get(circuits[i]));
+        }
+
+        addCellDestroyerMixerRecipe(
+            BGEMachineList.CellDestroyerMixerBronze,
+            "Bronze Steam",
+            tanks[0],
+            Materials.Bronze,
+            ItemList.Hull_Bronze_Bricks.get(1),
+            new ItemStack(Blocks.chest));
+        addCellDestroyerMixerRecipe(
+            BGEMachineList.CellDestroyerMixerSteel,
+            "Steel Steam",
+            tanks[0],
+            Materials.Steel,
+            ItemList.Hull_HP_Bricks.get(1),
+            new ItemStack(Blocks.chest));
+    }
+
+    private static void addCellDestroyerMixerRecipe(BGEMachineList output, String tierName, ItemStack tank,
+        Materials rotorMaterial, ItemStack machine, Object circuitOrChest) {
+        ItemStack rotor = GTOreDictUnificator.get(OrePrefixes.rotor, rotorMaterial, 1);
+        if (tank == null || tank.getItem() == null
+            || rotor == null
+            || rotor.getItem() == null
+            || machine == null
+            || machine.getItem() == null) {
+            BetterGTExperience.LOG.error(
+                "Cannot register Cell Destroyer Mixer {} crafting recipe: missing tank={}, rotor={}, machineOrHull={}. Check BuildCraft Factory, Iron Tanks and GregTech.",
+                tierName,
+                tank,
+                rotor,
+                machine);
+            return;
+        }
+        boolean registered = GTModHandler.addCraftingRecipe(
+            output.get(1),
+            GTModHandler.RecipeBits.BITS,
+            new Object[] { "TRT", "TRT", "CMC", 'T', tank, 'R', rotor, 'M', machine, 'C', circuitOrChest });
+        if (registered) {
+            BetterGTExperience.LOG.info("Registered Cell Destroyer Mixer {} crafting recipe", tierName);
+        } else {
+            BetterGTExperience.LOG.error("GT5U rejected Cell Destroyer Mixer {} crafting recipe", tierName);
         }
     }
 

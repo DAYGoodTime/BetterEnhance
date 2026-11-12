@@ -16,7 +16,7 @@ import cpw.mods.fml.common.event.FMLServerStartingEvent;
     version = Tags.VERSION,
     name = "BetterGTExperience",
     acceptedMinecraftVersions = "[1.7.10]",
-    dependencies = "required-after:gtnhlib;required-after:gregtech;required-after:structurelib;after:TwistSpaceTechnology")
+    dependencies = "required-after:gtnhlib;required-after:gregtech;required-after:structurelib;after:TwistSpaceTechnology;after:etfuturum")
 public class BetterGTExperience {
 
     public static final String MODID = "betterexperience";

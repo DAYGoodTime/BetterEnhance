@@ -70,6 +70,10 @@ betterexperience.machine.latex.electric.10.name=史诗过胶机 II
 betterexperience.machine.cell_destroyer_electrolyzer.name=单元毁灭者电解机
 betterexperience.machine.cell_destroyer_electrolyzer.recipes=使用多方块电解机的无单元配方。
 
+betterexperience.machine.cell_destroyer_mixer.name=单元毁灭者搅拌机
+betterexperience.machine.cell_destroyer_mixer.bronze.name=青铜蒸汽搅拌机
+betterexperience.machine.cell_destroyer_mixer.steel.name=高压蒸汽搅拌机
+
 betterexperience.machine.me_output_assembly.name=ME输出总成
 betterexperience.machine.me_output_assembly.desc.0=用胶水把输出仓和输出总线黏在一起不就好了
 betterexperience.machine.me_output_assembly.fluids=放入流体元件

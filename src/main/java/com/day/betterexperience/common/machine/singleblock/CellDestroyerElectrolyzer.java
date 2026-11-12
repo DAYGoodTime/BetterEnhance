@@ -253,15 +253,13 @@ public class CellDestroyerElectrolyzer extends MTEBasicMachineWithRecipe {
 
     @Override
     protected BasicUIProperties getUIProperties() {
-        BasicUIProperties centrifuge = RecipeMaps.centrifugeRecipes.getFrontend()
-            .getUIProperties();
         BasicUIProperties electrolyzer = RecipeMaps.electrolyzerRecipes.getFrontend()
             .getUIProperties();
         return super.getUIProperties().toBuilder()
             .maxFluidInputs(1)
             .maxFluidOutputs(FLUID_OUTPUT_SLOTS)
-            .slotOverlays(centrifuge::getOverlayForSlot)
-            .slotOverlaysMUI2(centrifuge.slotOverlaysMUI2)
+            .slotOverlays(electrolyzer::getOverlayForSlot)
+            .slotOverlaysMUI2(electrolyzer.slotOverlaysMUI2)
             .progressBarTexture(electrolyzer.progressBarTexture)
             .progressBarTextureMUI2(electrolyzer.progressBarMUI2)
             .build();

@@ -23,9 +23,19 @@ public enum BGEMachineList {
     CellDestroyerElectrolyzerMV,
     CellDestroyerElectrolyzerHV,
     CellDestroyerElectrolyzerEV,
-    MEOutputAssembly;
+    MEOutputAssembly,
+    CellDestroyerMixerBronze,
+    CellDestroyerMixerSteel,
+    CellDestroyerMixerLV,
+    CellDestroyerMixerMV,
+    CellDestroyerMixerHV,
+    CellDestroyerMixerEV;
 
     private ItemStack stack;
+
+    public boolean isRegistered() {
+        return stack != null;
+    }
 
     public void set(ItemStack value) {
         if (stack != null) throw new IllegalStateException("Machine already registered: " + name());

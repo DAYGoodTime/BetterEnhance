@@ -69,6 +69,10 @@ betterexperience.machine.latex.electric.10.name=Epic L.A.T.E.X. II
 betterexperience.machine.cell_destroyer_electrolyzer.name=Cell Destroyer Electrolyzer
 betterexperience.machine.cell_destroyer_electrolyzer.recipes=Uses the multiblock electrolyzer's cell-free recipes.
 
+betterexperience.machine.cell_destroyer_mixer.name=Cell Destroyer Mixer
+betterexperience.machine.cell_destroyer_mixer.bronze.name=Cell Destroyer Mixer (Bronze Steam)
+betterexperience.machine.cell_destroyer_mixer.steel.name=Cell Destroyer Mixer (Steel Steam)
+
 betterexperience.machine.me_output_assembly.name=ME Output Assembly
 betterexperience.machine.me_output_assembly.desc.0=Outputs items and fluids through one ME network connection.
 betterexperience.machine.me_output_assembly.fluids=Fluid output

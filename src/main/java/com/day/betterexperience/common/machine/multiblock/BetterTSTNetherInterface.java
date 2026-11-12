@@ -230,6 +230,6 @@ public class BetterTSTNetherInterface extends BGTEMultiblockBase<BetterTSTNether
             .addInputHatch("1+", hatchPosition, 1)
             .addOutputHatch("1+", hatchPosition, 1)
             .addEnergyHatch("1+", hatchPosition, 1)
-            .toolTipFinisher("BetterGTExperience", "Twist Space Technology");
+            .toolTipFinisher();
     }
 }
