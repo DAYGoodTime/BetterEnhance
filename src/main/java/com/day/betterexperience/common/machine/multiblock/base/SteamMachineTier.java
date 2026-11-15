@@ -3,8 +3,8 @@ package com.day.betterexperience.common.machine.multiblock.base;
 public enum SteamMachineTier {
 
     UNFORMED(0, 1, 1.0),
-    BRONZE(1, 1, 1.0),
-    STEEL(2, 2, 1.5);
+    BRONZE(1, 1, 2.5),
+    STEEL(2, 2, 3.5);
 
     private final int id;
     private final int parallelMultiplier;

@@ -1,11 +1,11 @@
 betterxeperience.config.general=General
-betterxeperience.machine.nether_interface.name=Nether Interface
-betterexperience.machine.nether_interface.origin=Enhanced TST Version
-betterxeperience.machine.nether_interface.energy_hatches=§aSupports multi-amp energy hatches and laser hatches.§7
-betterxeperience.machine.nether_interface.casing=Solid Steel Machine Casings (maximum, including replaceable hatch positions)
-betterxeperience.machine.nether_interface.frame=Obsidian Frames
-betterxeperience.machine.nether_interface.enhanced_obsidian=Mechanically Enhanced Obsidian (TST)
-betterxeperience.machine.nether_interface.obsidian=Obsidian
+betterexperience.machine.nether_interface.name=Nether Interface
+betterexperience.machine.nether_interface.machine_type=Otherworld Teleporter
+betterexperience.machine.nether_interface.hatch_position=Solid Steel Machine Casing positions, hint block 1
+betterexperience.machine.nether_interface.casing=Solid Steel Machine Casings (maximum, including replaceable hatch positions)
+betterexperience.machine.nether_interface.frame=Obsidian Frames
+betterexperience.machine.nether_interface.enhanced_obsidian=Mechanically Enhanced Obsidian (TST)
+betterexperience.machine.nether_interface.obsidian=Obsidian
 
 betterexperience.machine.photonic_quantum_master.name=Precise High-Energy Photonic Quantum Master (Enhanced)
 betterexperience.machine.photonic_quantum_master.machine_type=Photon Controller / Laser Engraver
@@ -35,6 +35,8 @@ betterexperience.machine.photonic_quantum_master.enabled=§aEnabled§r
 betterexperience.machine.photonic_quantum_master.disabled=§7Disabled§r
 
 betterexperience.machine.steam_industrial_electrolyzer.name=Steam Industrial Electrolyzer
+betterexperience.machine.large_steam_hatch.name=Large Steam Hatch
+betterexperience.machine.steam_industrial_electrolyzer.steam_supply=Steam Hatch / Large Steam Hatch / ME Input Hatch
 betterexperience.machine.steam_industrial_electrolyzer.plated_casing=Bronze Plated Bricks / Solid Steel Machine Casings
 betterexperience.machine.steam_industrial_electrolyzer.firebox=Bronze Fireboxes / Steel Fireboxes (bottom layer; not replaceable with hatches)
 betterexperience.machine.steam_industrial_electrolyzer.pipe_casing=Bronze Pipe Casings / Steel Pipe Casings

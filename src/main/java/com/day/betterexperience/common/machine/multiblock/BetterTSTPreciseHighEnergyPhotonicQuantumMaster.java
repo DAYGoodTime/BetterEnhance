@@ -33,9 +33,11 @@ import static tectech.thing.casing.TTCasingsContainer.sBlockCasingsTT;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StatCollector;
 import net.minecraftforge.common.util.ForgeDirection;
 
@@ -43,9 +45,6 @@ import org.jetbrains.annotations.NotNull;
 
 import com.Nxer.TwistSpaceTechnology.common.block.meta.casing.PhotonControllerUpgradeCasing;
 import com.Nxer.TwistSpaceTechnology.common.machine.MachineTexture.TSTControllerTextures;
-import com.Nxer.TwistSpaceTechnology.util.TSTUtils;
-import com.Nxer.TwistSpaceTechnology.util.text.TSTMultiblockTooltipBuilder;
-import com.Nxer.TwistSpaceTechnology.util.text.TSTSharedLocalization;
 import com.day.betterexperience.common.machine.multiblock.base.BGTEMultiblockBase;
 import com.gtnewhorizon.structurelib.structure.IStructureDefinition;
 import com.gtnewhorizon.structurelib.structure.IStructureElement;
@@ -277,36 +276,32 @@ public class BetterTSTPreciseHighEnergyPhotonicQuantumMaster
 
     @Override
     protected MultiblockTooltipBuilder createTooltip() {
-        return new TSTMultiblockTooltipBuilder()
-            .addMachineType(
-                TSTUtils.tr("tst.common.machine.PreciseHighEnergyPhotonicQuantumMaster.tooltip.machine_type"))
-            .addInfo(TSTUtils.tr("tst.common.machine.PreciseHighEnergyPhotonicQuantumMaster.tooltip.info.01"))
-            .addInfo(TSTUtils.tr("tst.common.machine.PreciseHighEnergyPhotonicQuantumMaster.tooltip.info.02"))
-            .addInfo(TSTUtils.tr("tst.common.machine.PreciseHighEnergyPhotonicQuantumMaster.tooltip.info.03"))
-            .addInfo(TSTUtils.tr("tst.common.machine.PreciseHighEnergyPhotonicQuantumMaster.tooltip.info.04"))
-            .addInfo(TSTUtils.tr("tst.common.machine.PreciseHighEnergyPhotonicQuantumMaster.tooltip.info.05"))
-            .addInfo(TSTUtils.tr("tst.common.machine.PreciseHighEnergyPhotonicQuantumMaster.tooltip.info.06"))
-            .addInfo(text("parallel_upgrade"))
-            .addInfo(TSTUtils.tr("tst.common.machine.PreciseHighEnergyPhotonicQuantumMaster.tooltip.info.07"))
-            .addInfo(TSTUtils.tr("tst.common.machine.PreciseHighEnergyPhotonicQuantumMaster.tooltip.info.08"))
-            .addInfo(TSTUtils.tr("tst.common.machine.PreciseHighEnergyPhotonicQuantumMaster.tooltip.info.09"))
-            .addInfo(TSTUtils.tr("tst.common.machine.PreciseHighEnergyPhotonicQuantumMaster.tooltip.info.10"))
-            .beginStructureBlock(SHAPE_MAIN)
-            .addController(TSTSharedLocalization.Structure.textFrontCenter)
-            .addCasingInfoRange(TSTSharedLocalization.Structure.textCasingAdvIrPlated, 296, 347, false)
-            .addCasingInfoRange(TSTSharedLocalization.Structure.textCasingTT_0, 0, 78, false)
-            .addCasingInfoRange(
-                TSTUtils.tr("tst.common.machine.PreciseHighEnergyPhotonicQuantumMaster.tooltip.structure.01"),
-                0,
-                25,
-                false)
-            .addInputHatch(TSTSharedLocalization.Structure.textCenterOfLRSides, 2)
-            .addOutputHatch(TSTSharedLocalization.Structure.textCenterOfLRSides, 2)
-            .addInputBus(TSTSharedLocalization.Structure.textCenterOfLRSides, 2)
-            .addOutputBus(TSTSharedLocalization.Structure.textCenterOfLRSides, 2)
-            .addEnergyHatch(
-                TSTUtils.tr("tst.common.machine.PreciseHighEnergyPhotonicQuantumMaster.tooltip.structure.02"),
-                3)
+        return new MultiblockTooltipBuilder().addMachineType(text("machine_type"))
+            .addMarkdown(
+                new ResourceLocation("betterexperience", "photonic-quantum-master"),
+                Map.of(
+                    "laserParallel",
+                    Parallel_LaserEngraverMode_PreciseHighEnergyPhotonicQuantumMaster,
+                    "photonParallel",
+                    Parallel_PhCMode_PreciseHighEnergyPhotonicQuantumMaster,
+                    "laserSpeed",
+                    SpeedUpMultiplier_LaserEngraverMode_PreciseHighEnergyPhotonicQuantumMaster,
+                    "photonSpeed",
+                    SpeedUpMultiplier_PhCMode_PreciseHighEnergyPhotonicQuantumMaster))
+            .beginStructureBlock(15, 7, 9, true)
+            .addController(text("controller"))
+            .addCasing("296-347", text("iridium_casing"), false)
+            .addCasing("52", text("gearbox"), false)
+            .addCasing("76", text("assembler_casing"), false)
+            .addCasing("52", text("filter_casing"), false)
+            .addCasing("0-78", text("power_casing"), false)
+            .addCasing("0-25", text("upgrade_casing"), false)
+            .addMaintenanceHatch("0+", text("maintenance_position"), 1)
+            .addInputHatch("1+", text("io_position"), 2)
+            .addOutputHatch("1+", text("io_position"), 2)
+            .addInputBus("1+", text("io_position"), 2)
+            .addOutputBus("1+", text("io_position"), 2)
+            .addEnergyHatch("1+", text("energy_position"), 3)
             .toolTipFinisher();
     }
 }

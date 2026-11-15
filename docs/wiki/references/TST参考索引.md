@@ -20,6 +20,10 @@
 - `src/main/resources/assets/gtnhcommunitymod/lang/{zh_CN,en_US}.lang`：中英文原始语言键。
 - `src/main/java/com/Nxer/TwistSpaceTechnology/config/Config.java`：运行配置入口。
 
-本项目地狱接口直接使用 `tst.common.machine.NetherInterface.tooltip.machine_type`、`info.01` 至 `info.03`，以及 `tst.common.shared.structure.text_use_blueprint`；不在自身语言文件中复制或覆盖这些键。原版说明之后追加本项目命名空间的配置、特性和结构提示。原版耗电说明固定为 IV，实际耗电以追加的当前配置公式为准；仓口提示保留实际提示编号和替换要求。
+本项目两台 TST 增强机器的主机说明存于自身 `assets/betterexperience/lang/{zh_CN,en_US}/tooltip/{nether-interface,photonic-quantum-master}.md`，不覆盖或调用 TST Tooltip 语言键。地狱接口配置及光量子掌控者模式常量作为 Markdown 变量传入，结构／状态使用本项目语言键；英文地狱接口旧拼写 `betterxeperience.machine.nether_interface.*` 已对齐 Java 使用的 `betterexperience`。
 
-保留 GT5U 原生 `MultiblockTooltipBuilder`，不为复用文本引入 TST 的 Tooltip Builder、基类或署名机制。语言键已与实际依赖核对；格式及静态检查不代表游戏内显示与结构投影已验收。
+两台机器统一使用 GT5U 原生 `MultiblockTooltipBuilder.addMarkdown` 与结构 API，光量子掌控者不再引用 `TSTMultiblockTooltipBuilder`、`TSTSharedLocalization` 或 `TSTUtils`。结构字符串与运行逻辑保持不变，结构页补全固定外壳数量及维护仓位置，提示编号仍为维护 1、物料 2、能源 3。API 按本地 GT5U `5.09.54.265` sources JAR 核对，未重新解析依赖；格式及静态检查不代表游戏内显示与结构投影已验收。
+
+## 修订记录
+
+- 2026-11-15：按用户决定迁移两台增强机器的中英 Markdown，替代原先复用 TST 语言键的约定。此前地狱接口复用 `machine_type`、`info.01`–`info.03` 和蓝图提示；光量子掌控者复用 TST 专用 Builder 与共享结构文本，该方式不再生效。

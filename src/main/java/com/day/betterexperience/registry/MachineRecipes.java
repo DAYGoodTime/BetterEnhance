@@ -24,6 +24,7 @@ import gregtech.api.util.GTModHandler;
 import gregtech.api.util.GTOreDictUnificator;
 import gregtech.api.util.GTRecipeConstants;
 import gregtech.api.util.recipe.Scanning;
+import gtPlusPlus.xmod.gregtech.api.enums.GregtechItemList;
 import gtnhlanth.common.register.WerkstoffMaterialPool;
 
 public final class MachineRecipes {
@@ -46,6 +47,15 @@ public final class MachineRecipes {
         registerCellDestroyerElectrolyzerRecipes();
         registerCellDestroyerMixerRecipes();
         registerMEOutputAssemblyRecipe();
+        registerLargeSteamHatchRecipe();
+    }
+
+    private static void registerLargeSteamHatchRecipe() {
+        GTModHandler.addCraftingRecipe(
+            BGEMachineList.LargeSteamHatch.get(1),
+            GTModHandler.RecipeBits.BITS,
+            new Object[] { "BBB", "HPH", "BBB", 'B', OrePrefixes.plate.get(Materials.Bronze), 'H',
+                GregtechItemList.Hatch_Input_Steam.get(1), 'P', OrePrefixes.pipeHuge.get(Materials.Bronze) });
     }
 
     private static void registerMEOutputAssemblyRecipe() {

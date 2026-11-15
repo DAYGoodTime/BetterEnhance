@@ -25,9 +25,11 @@ import static gregtech.api.util.GTStructureUtility.ofFrame;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StatCollector;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.FluidStack;
@@ -210,16 +212,19 @@ public class BetterTSTNetherInterface extends BGTEMultiblockBase<BetterTSTNether
 
     @Override
     protected MultiblockTooltipBuilder createTooltip() {
-        String hatchPosition = StatCollector.translateToLocal("tst.common.shared.structure.text_use_blueprint");
-        return new MultiblockTooltipBuilder()
-            .addMachineType(StatCollector.translateToLocal("tst.common.machine.NetherInterface.tooltip.machine_type"))
-            .addInfo(text("origin"))
-            .addInfo(text("info.0"))
-            .addInfo(StatCollector.translateToLocal("tst.common.machine.NetherInterface.tooltip.info.01"))
-            .addInfo(StatCollector.translateToLocal("tst.common.machine.NetherInterface.tooltip.info.02"))
-            .addInfo(StatCollector.translateToLocal("tst.common.machine.NetherInterface.tooltip.info.03"))
-            .addSeparator()
-            .addInfo(text("energy_hatches"))
+        String hatchPosition = text("hatch_position");
+        return new MultiblockTooltipBuilder().addMachineType(text("machine_type"))
+            .addMarkdown(
+                new ResourceLocation("betterexperience", "nether-interface"),
+                Map.of(
+                    "maxParallel",
+                    getMaxParallelRecipes(),
+                    "energyCost",
+                    Config.BasicEnergyCost_NetherInterface,
+                    "waterCost",
+                    Config.BasicDistilledWaterCost_NetherInterface,
+                    "cycleTicks",
+                    Config.CycleTime_NetherInterface))
             .beginStructureBlock(15, 16, 4, true)
             .addCasing("128", text("casing"), false)
             .addCasing("48", text("frame"), false)

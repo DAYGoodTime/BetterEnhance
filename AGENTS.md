@@ -19,4 +19,4 @@
 - 不覆盖用户未提交的修改，不把生成的 `Tags.java` 当作手写源文件维护。
 - 多方块结构直接使用原始 Shape 字符串数组，不通过循环填充、字符串拼接／替换或数组复制动态重建 Shape；仅在结构过于重复时允许抽取重复片段或动态生成，且须保留清晰的几何对应关系。
 - 所有机器 Tooltip 遵循 GT／GTNL 风格：结构页仅描述所需方块、数量、等级／朝向／替换要求，仓口用原生 `add*Hatch`／`add*Bus`，专用仓口用 `addMiscHatch`，位置写实际提示方块编号且与 `.hint(n)` 一致；运行模式、容量、并行、机制及特性支持放入主机 `addInfo`，按主题用 `addSeparator()` 分组，数值局部着色后恢复正文颜色。不把功能说明加入结构提示编号，不宣称未经实现核验的支持。
-- 蒸汽机器 Tooltip 的主机说明使用 `assets/betterexperience/lang/{语言}/tooltip/*.md`，通过 GT 原生 Markdown Tooltip API 加载；编写前阅读 GTNL 对应蒸汽机器的 Markdown、Tooltip 构造和实际机制，沿用其简洁措辞、信息顺序及局部着色，不自行添加口号、实现细节或重复说明。结构页继续使用原生 Tooltip Builder。既有两台 TST 移植机器保留原语言键 Tooltip，不迁移为 Markdown。
+- 蒸汽机器及两台 TST 增强机器 Tooltip 的主机说明使用 `assets/betterexperience/lang/{语言}/tooltip/*.md`，通过 GT 原生 Markdown Tooltip API 加载；编写前阅读 GTNL 对应机器现有的 Markdown、Tooltip 构造和实际机制，沿用其简洁措辞、信息顺序及局部着色，不自行添加口号、实现细节或重复说明。结构页继续使用原生 Tooltip Builder。两台 TST 增强机器的 Tooltip 不依赖 TST 语言键或专用 Builder。

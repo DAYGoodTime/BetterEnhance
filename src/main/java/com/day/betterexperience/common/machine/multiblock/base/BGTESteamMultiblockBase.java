@@ -3,15 +3,19 @@ package com.day.betterexperience.common.machine.multiblock.base;
 import static gregtech.api.util.GTUtility.validMTEList;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.IdentityHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StatCollector;
+import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 
@@ -21,16 +25,19 @@ import org.jetbrains.annotations.NotNull;
 import com.day.betterexperience.client.gui.BGTESteamMultiblockGui;
 import com.day.betterexperience.common.machine.hatch.MEOutputAssembly;
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Iterables;
 import com.gtnewhorizon.structurelib.alignment.constructable.ISurvivalConstructable;
 import com.gtnewhorizon.structurelib.structure.IStructureElement;
 import com.gtnewhorizon.structurelib.structure.StructureUtility;
 
+import appeng.me.GridAccessException;
 import gregtech.api.casing.Casings;
 import gregtech.api.enums.Materials;
 import gregtech.api.enums.VoltageIndex;
 import gregtech.api.interfaces.IOutputBus;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
 import gregtech.api.logic.ProcessingLogic;
+import gregtech.api.metatileentity.implementations.MTEHatch;
 import gregtech.api.metatileentity.implementations.MTEHatchInput;
 import gregtech.api.metatileentity.implementations.MTEHatchInputBus;
 import gregtech.api.metatileentity.implementations.MTEHatchMultiInput;
@@ -57,6 +64,9 @@ import mcp.mobius.waila.api.IWailaDataAccessor;
 public abstract class BGTESteamMultiblockBase<T extends BGTESteamMultiblockBase<T>> extends MTESteamMultiBlockBase<T>
     implements ISurvivalConstructable {
 
+    private static final String GTNL_WIRELESS_STEAM_HATCH = "com.science.gtnl.common.machine.hatch.WirelessSteamEnergyHatch";
+
+    private final ArrayList<MTEHatch> pipelessSteamHatches = new ArrayList<>();
     protected SteamMachineTier checkedTier = SteamMachineTier.UNFORMED;
     private SteamMachineTier machineTier = SteamMachineTier.UNFORMED;
     private int recipeOcCount;
@@ -78,6 +88,10 @@ public abstract class BGTESteamMultiblockBase<T extends BGTESteamMultiblockBase<
     }
 
     protected abstract int getBaseParallel();
+
+    protected double getBaseEnergyModifier() {
+        return 1.0;
+    }
 
     public SteamMachineTier getMachineTier() {
         return machineTier;
@@ -157,9 +171,10 @@ public abstract class BGTESteamMultiblockBase<T extends BGTESteamMultiblockBase<
             protected @NotNull OverclockCalculator createOverclockCalculator(@NotNull GTRecipe recipe) {
                 // Like GTNL, apply manual steam OC after parallel selection; supply is checked when draining steam.
                 return super.createOverclockCalculator(recipe).setMaxOverclocks(0)
-                    .setEUtDiscount(1 << (2 * Math.min(4, recipeOcCount)));
+                    .setEUtDiscount(getBaseEnergyModifier() * (1 << (2 * Math.min(4, recipeOcCount))));
             }
         }.setMaxParallelSupplier(this::getTrueParallel)
+            .setEuModifierSupplier(this::getBaseEnergyModifier)
             .setSpeedBonusSupplier(() -> machineTier.getDurationModifier() / (1 << Math.min(4, recipeOcCount)));
     }
 
@@ -176,7 +191,16 @@ public abstract class BGTESteamMultiblockBase<T extends BGTESteamMultiblockBase<
     }
 
     protected void finishSteamStructureCheck(List<StructureError> errors) {
-        checkHasSteamInput(errors);
+        boolean hasMEInput = false;
+        for (MTEHatchInput hatch : validMTEList(mInputHatches)) {
+            if (hatch instanceof MTEHatchInputME) {
+                hasMEInput = true;
+                break;
+            }
+        }
+        if (mSteamInputFluids.isEmpty() && pipelessSteamHatches.isEmpty() && !hasMEInput) {
+            errors.add(StructureErrors.of("GT5U.gui.text.structure_error.missing_steam_input"));
+        }
         if (mSteamInputs.isEmpty() && mInputBusses.isEmpty()) {
             errors.add(StructureErrors.of("betterexperience.steam.structure.missing_input_bus"));
         }
@@ -198,14 +222,55 @@ public abstract class BGTESteamMultiblockBase<T extends BGTESteamMultiblockBase<
     @Override
     public void clearHatches() {
         super.clearHatches();
+        pipelessSteamHatches.clear();
         checkedTier = SteamMachineTier.UNFORMED;
     }
 
     @Override
     public boolean addSteamInputFluidHatch(IGregTechTileEntity tile, int texture) {
-        if (tile == null || !(tile.getMetaTileEntity() instanceof MTEHatchCustomFluidBase hatch)) return false;
-        if (!Materials.Steam.mGas.equals(hatch.mLockedFluid)) return false;
-        return addToMachineListInternal(mSteamInputFluids, hatch, texture);
+        if (tile == null || !(tile.getMetaTileEntity() instanceof MTEHatch hatch)) return false;
+        if (hatch instanceof MTEHatchCustomFluidBase steamHatch) {
+            if (!Materials.Steam.mGas.equals(steamHatch.mLockedFluid)) return false;
+            return addToMachineListInternal(mSteamInputFluids, steamHatch, texture);
+        }
+        // Identify the optional hatch without loading GTNL classes; all tank access uses native GT APIs.
+        if (GTNL_WIRELESS_STEAM_HATCH.equals(
+            hatch.getClass()
+                .getName())) {
+            return addToMachineListInternal(pipelessSteamHatches, hatch, texture);
+        }
+        return false;
+    }
+
+    private Iterable<MTEHatch> getSteamSupplyHatches() {
+        return Iterables.concat(validMTEList(mSteamInputFluids), validMTEList(pipelessSteamHatches));
+    }
+
+    private List<MTEHatchInputME> getMESteamSupplyHatches() {
+        List<MTEHatchInputME> hatches = new ArrayList<>();
+        Set<Object> inventories = Collections.newSetFromMap(new IdentityHashMap<>());
+        FluidStack steam = Materials.Steam.getGas(1);
+        for (MTEHatchInput hatch : validMTEList(mInputHatches)) {
+            if (!(hatch instanceof MTEHatchInputME me) || !me.isAllowedToWork()) continue;
+            boolean configured = false;
+            for (FluidStack fluid : me.getStoredFluids()) {
+                if (fluid != null && fluid.isFluidEqual(steam)) {
+                    configured = true;
+                    break;
+                }
+            }
+            if (!configured) continue;
+            try {
+                // Several stocking hatches on one network expose the same steam, not separate tanks.
+                Object inventory = me.getProxy()
+                    .getStorage()
+                    .getFluidInventory();
+                if (inventories.add(inventory)) hatches.add(me);
+            } catch (GridAccessException ignored) {
+                // An unavailable ME network cannot supply steam.
+            }
+        }
+        return hatches;
     }
 
     protected static <M extends BGTESteamMultiblockBase<M>> HatchElementBuilder<M> buildSteamSupply(Class<M> type) {
@@ -254,6 +319,7 @@ public abstract class BGTESteamMultiblockBase<T extends BGTESteamMultiblockBase<
     public void updateHatchTexture() {
         super.updateHatchTexture();
         int texture = getCasingTextureId();
+        for (MTEHatch hatch : validMTEList(pipelessSteamHatches)) hatch.updateTexture(texture);
         for (var bus : validMTEList(mInputBusses)) bus.updateTexture(texture);
         for (var bus : validMTEList(mOutputBusses)) bus.updateTexture(texture);
     }
@@ -280,9 +346,13 @@ public abstract class BGTESteamMultiblockBase<T extends BGTESteamMultiblockBase<
     public ArrayList<FluidStack> getAllSteamStacks() {
         ArrayList<FluidStack> steam = new ArrayList<>();
         FluidStack template = Materials.Steam.getGas(1);
-        for (MTEHatchCustomFluidBase hatch : validMTEList(mSteamInputFluids)) {
+        for (MTEHatch hatch : getSteamSupplyHatches()) {
             FluidStack fluid = hatch.getFillableStack();
             if (fluid != null && fluid.isFluidEqual(template)) steam.add(fluid);
+        }
+        for (MTEHatchInputME hatch : getMESteamSupplyHatches()) {
+            FluidStack fluid = hatch.drain(ForgeDirection.UNKNOWN, Materials.Steam.getGas(Integer.MAX_VALUE), false);
+            if (fluid != null && fluid.amount > 0) steam.add(fluid);
         }
         return steam;
     }
@@ -295,7 +365,9 @@ public abstract class BGTESteamMultiblockBase<T extends BGTESteamMultiblockBase<
 
     public long getSteamCapacityLong() {
         long capacity = 0;
-        for (MTEHatchCustomFluidBase hatch : validMTEList(mSteamInputFluids)) capacity += hatch.getRealCapacity();
+        for (MTEHatch hatch : getSteamSupplyHatches()) capacity += hatch.getRealCapacity();
+        // Native stocking hatch snapshots and requests are int-sized, even if AE stores more.
+        capacity += (long) getMESteamSupplyHatches().size() * Integer.MAX_VALUE;
         return capacity;
     }
 
@@ -315,14 +387,22 @@ public abstract class BGTESteamMultiblockBase<T extends BGTESteamMultiblockBase<
     }
 
     private boolean consumeSteam(long amount) {
+        if (amount == 0) return true;
         if (amount < 0 || getSteamStoredLong() < amount) return false;
         long remaining = amount;
         FluidStack template = Materials.Steam.getGas(1);
-        for (MTEHatchCustomFluidBase hatch : validMTEList(mSteamInputFluids)) {
+        for (MTEHatch hatch : getSteamSupplyHatches()) {
             if (remaining == 0) break;
             FluidStack fluid = hatch.getFillableStack();
             if (fluid == null || !fluid.isFluidEqual(template)) continue;
             FluidStack drained = hatch.drain((int) Math.min(remaining, Integer.MAX_VALUE), true);
+            if (drained != null) remaining -= drained.amount;
+        }
+        for (MTEHatchInputME hatch : getMESteamSupplyHatches()) {
+            if (remaining == 0) break;
+            // UNKNOWN uses the native controller extraction path, including AE power/security checks.
+            FluidStack drained = hatch
+                .drain(ForgeDirection.UNKNOWN, Materials.Steam.getGas(Math.min(remaining, Integer.MAX_VALUE)), true);
             if (drained != null) remaining -= drained.amount;
         }
         return remaining == 0;

@@ -88,6 +88,8 @@
 
 ### Tooltip 与仓口
 
+- 两台 TST 增强机器 Markdown 迁移（2026-11-15）：阅读当前 `J/common/machine/multiblock/steam/LargeSteamMixer.java#createTooltip()`，该入口已使用 GTNL 自有 `GTNLMultiblockTooltipBuilder.addAutoTooltip`，本次不迁入自动扫描器。沿用本项目蒸汽电解机的 GT 原生 `addMarkdown`／结构页分离方式，签名核对本地 GT5U `.265` sources JAR；未复制 GTNL 代码或资源，未修改运行逻辑。
+
 - 机器署名参考 `J/loader/MachineLoader.java` 注册后调用 `J/utils/text/AnimatedTooltipHandler.java#addItemTooltip` 的物品级附加方式。本项目不复制其自有工具类，直接使用 GTNHLib `0.11.54` 的 `AnimatedTooltipHandler.addItemTooltip(ItemStack, Supplier<String>)`，在客户端初始化完成机器注册后遍历已绑定的 `BGEMachineList`。当前 `2.9.0` 清单指定的 GT5U `5.09.54.265` 中，`toolTipFinisher(String...)` 仅为二进制兼容保留，作者参数明确被忽略；无参收尾不承担署名功能。API 按缓存 sources JAR 核对，未重新解析依赖。
 - 结构／仓口提示组织：`NuclearReactor.java`、`wireless/FastNeutronBreederReactor.java`；主题分隔与分组写法：`WhiteNightGenerator.java`。
 - 编号语言键与逐条 `addInfo`：`SiphonTurbine.createTooltip()`。
@@ -99,6 +101,10 @@
 蒸汽输入分离／批处理补全参考 `J/common/machine/multiMachineBase/SteamMultiMachineBase.java` 的 `supportsInputSeparation`、`supportsBatchMode`、`getDefaultInputSeparationMode` 与 `doCheckRecipe`：采用默认不分离、普通／蒸汽总线逐仓检查及按颜色共享流体的思路。GT5U `.265` 的普通分离路径仍不遍历蒸汽总线，本项目通过 `checkRecipeForCustomHatches` 补充，不复制 GTNL 整份配方循环；原生合成缓存优先级、普通总线检查、MUI2 同步、NBT 和批处理器继续复用 GT。未复制参考源码或引入 GTNL 处理器。
 
 ### ME输出总成与蒸汽输出接口
+
+- 大型蒸汽仓制造配方补充（2026-11-15）：阅读 `J/common/recipe/gtnl/CraftingTableRecipes.java` 的原生有序合成及青铜板材料引用，复查 `J/common/machine/hatch/CustomFluidHatch.java` 的容量构造；只沿用注册组织，不复制代码或数值。本项目按 GT5U `.265` 缓存 sources JAR 的 `GregtechItemList.Hatch_Input_Steam`、`GregtechCustomHatches` 与 `OrePrefixes.pipeHuge` 核对材料；继续使用原生父类而非 GTNL 自有流体仓。
+
+本轮大型蒸汽仓／ME 供汽（2026-11-15）核对 `J/common/machine/hatch/CustomFluidHatch.java` 的锁定流体／容量／实例构造，以及 `J/common/machine/multiMachineBase/SteamMultiMachineBase.java#depleteInputQuantity` 的专用仓与普通输入仓定向抽取。未复制 GTNL 源码、数值、ID 或资源。本项目直接继承 GT5U `5.09.54.265` 缓存源码的 `MTEHatchCustomFluidBase`；核对 `GregtechCustomHatches`、`MTESteamMultiBlockBase.addSteamInputFluidHatch` 和 `MTEHatchInputME` 的配置副本、模拟／实际 `UNKNOWN` 抽取、配方生命周期。Context7 查得一般 ME 生命周期说明，具体签名与行为仍以本地 `.265` 为准，未重新解析依赖。与 GTNL 自有多流体仓／无线网络不同，本次大型仓只存普通蒸汽，ME 按原生接口抽取并按库存身份去重。
 
 - 阅读 `J/common/machine/multiMachineBase/SteamMultiMachineBase.java#getOutputBusses()` 的普通／蒸汽总线集合，以及 `J/common/machine/hatch/OutputBusMEProxy.java` 的原生 ME provider 继承与实例构造；在 `J/common/gui/modularui/` 的输出 GUI 文件中未检索到直接对应的双输出排版。配方材料引用核对 `J/common/recipe/gregtech/AssemblerRecipes.java`。只采用接口分工与枚举材料引用思路，不复制 GTNL 的代理仓机制、自有配方 Builder、数值或资源。
 - 本项目当前 `build/elytra_conventions/2.9.0.json` 指定 GT5U `5.09.54.265`、MUI2 `2.3.94-1.7.10`；本轮按对应缓存 sources JAR 核对 `MTESteamMultiBlockBase`、`MTEMultiBlockBase`、`HatchElement`、ME 仓口 GUI、`Materials`、`ItemList` 及 MUI2 `Flow`／`TextWidget`，未重新解析依赖。Context7 仅提供原生缓存 provider 的一般信息，不替代本地版本签名。

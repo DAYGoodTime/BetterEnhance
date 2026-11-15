@@ -3,6 +3,7 @@ package com.day.betterexperience.registry;
 import net.minecraft.util.StatCollector;
 
 import com.day.betterexperience.api.BGEMachineList;
+import com.day.betterexperience.common.machine.hatch.LargeSteamHatch;
 import com.day.betterexperience.common.machine.hatch.MEOutputAssembly;
 import com.day.betterexperience.common.machine.multiblock.BetterTSTNetherInterface;
 import com.day.betterexperience.common.machine.multiblock.BetterTSTPreciseHighEnergyPhotonicQuantumMaster;
@@ -28,12 +29,14 @@ public class MachineLoader {
             registerTSTMachines(id);
         }
         id += 2;
+        // SteamIndustrialElectrolyzer
         BGEMachineList.SteamIndustrialElectrolyzer.set(
             new SteamIndustrialElectrolyzer(
                 id++,
                 "betterexperience.steam_industrial_electrolyzer",
                 StatCollector.translateToLocal("betterexperience.machine.steam_industrial_electrolyzer.name"))
                     .getStackForm(1));
+        // Latex
         BGEMachineList.LatexBronze.set(
             new SteamLatexBronze(
                 id++,
@@ -56,6 +59,7 @@ public class MachineLoader {
                     StatCollector.translateToLocal("betterexperience.machine.latex.electric." + tier + ".name"),
                     tier).getStackForm(1));
         }
+        // Electrolyzers
         BGEMachineList[] cellDestroyerElectrolyzers = { BGEMachineList.CellDestroyerElectrolyzerLV,
             BGEMachineList.CellDestroyerElectrolyzerMV, BGEMachineList.CellDestroyerElectrolyzerHV,
             BGEMachineList.CellDestroyerElectrolyzerEV };
@@ -70,13 +74,13 @@ public class MachineLoader {
                         + cellDestroyerRomanTiers[tier - 1],
                     tier).getStackForm(1));
         }
-        // Append only: user-approved ID 32219, including when TST is absent.
+        // MeOutputHatch
         BGEMachineList.MEOutputAssembly.set(
             new MEOutputAssembly(
                 id++,
                 "betterexperience.me_output_assembly",
                 StatCollector.translateToLocal("betterexperience.machine.me_output_assembly.name")).getStackForm(1));
-        // User-approved append-only IDs 32220-32225; never shift existing registrations.
+        // Mixer
         BGEMachineList.CellDestroyerMixerBronze.set(
             new SteamCellDestroyerMixer(
                 id++,
@@ -100,6 +104,12 @@ public class MachineLoader {
                         + cellDestroyerRomanTiers[tier - 1],
                     tier).getStackForm(1));
         }
+        // LargeSteamHatch
+        BGEMachineList.LargeSteamHatch.set(
+            new LargeSteamHatch(
+                id++,
+                "betterexperience.large_steam_hatch",
+                StatCollector.translateToLocal("betterexperience.machine.large_steam_hatch.name")).getStackForm(1));
     }
 
     @Optional.Method(modid = "TwistSpaceTechnology")

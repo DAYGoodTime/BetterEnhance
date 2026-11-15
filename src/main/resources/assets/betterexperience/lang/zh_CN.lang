@@ -1,8 +1,7 @@
 betterexperience.config.general=通用配置
 betterexperience.machine.nether_interface.name=地狱接口
-betterexperience.machine.nether_interface.origin=增强版 TST 地狱接口，原作者：Nxer。
-betterexperience.machine.nether_interface.info.0=最大支持并行为 2147483648
-betterexperience.machine.nether_interface.energy_hatches=§a支持 多A能源仓 激光仓§7
+betterexperience.machine.nether_interface.machine_type=异界传送器
+betterexperience.machine.nether_interface.hatch_position=坚固机械方块位置，提示方块 1
 betterexperience.machine.nether_interface.casing=坚固机械方块
 betterexperience.machine.nether_interface.frame=黑曜石框架
 betterexperience.machine.nether_interface.enhanced_obsidian=机械强化黑曜石（TST）
@@ -36,6 +35,8 @@ betterexperience.machine.photonic_quantum_master.enabled=§a启用§r
 betterexperience.machine.photonic_quantum_master.disabled=§7禁用§r
 
 betterexperience.machine.steam_industrial_electrolyzer.name=蒸汽大型电解机
+betterexperience.machine.large_steam_hatch.name=大型蒸汽仓
+betterexperience.machine.steam_industrial_electrolyzer.steam_supply=蒸汽仓 / 大型蒸汽仓 / ME输入仓
 betterexperience.machine.steam_industrial_electrolyzer.plated_casing=青铜镀层砖块 / 坚固钢机械方块
 betterexperience.machine.steam_industrial_electrolyzer.firebox=青铜火箱 / 钢火箱（最底层，不可替换为仓口）
 betterexperience.machine.steam_industrial_electrolyzer.pipe_casing=青铜管道机械方块 / 钢管道机械方块

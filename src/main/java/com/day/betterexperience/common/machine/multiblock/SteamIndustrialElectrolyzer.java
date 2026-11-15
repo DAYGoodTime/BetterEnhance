@@ -49,8 +49,6 @@ public class SteamIndustrialElectrolyzer extends BGTESteamMultiblockBase<SteamIn
     private static final int OFFSET_Z = 1;
     private static IStructureDefinition<SteamIndustrialElectrolyzer> structure;
 
-    // Native GT5U Industrial Electrolyzer geometry, in StructureLib's original [depth][height] orientation.
-    // A: frames; B/C: the two original pipe runs; D: upper casings/hatches; F: bottom fireboxes.
     // spotless:off
     private static final String[][] SHAPE = {
         { " DDD ", "     ", "     ", "     ", " FFF " },
@@ -152,6 +150,11 @@ public class SteamIndustrialElectrolyzer extends BGTESteamMultiblockBase<SteamIn
     }
 
     @Override
+    protected double getBaseEnergyModifier() {
+        return 0.5;
+    }
+
+    @Override
     public int getTierRecipes() {
         ItemStack controllerItem = getControllerSlot();
         return controllerItem != null && controllerItem.stackSize > 0
@@ -203,7 +206,7 @@ public class SteamIndustrialElectrolyzer extends BGTESteamMultiblockBase<SteamIn
                     "steelParallel",
                     SteamMachineTier.STEEL.getParallel(getBaseParallel()),
                     "bronzeSpeed",
-                    SteamMachineTier.BRONZE.getSpeedMultiplier(),
+                    SteamMachineTier.BRONZE.getSpeedMultiplier() * 100 + "%",
                     "steelSpeed",
                     SteamMachineTier.STEEL.getSpeedMultiplier()))
             .beginStructureBlock(5, 5, 5, false)
@@ -212,7 +215,7 @@ public class SteamIndustrialElectrolyzer extends BGTESteamMultiblockBase<SteamIn
             .addCasing("21", StatCollector.translateToLocal(prefix + "firebox"), false)
             .addCasing("8", StatCollector.translateToLocal(prefix + "pipe_casing"), false)
             .addCasing("12", StatCollector.translateToLocal(prefix + "frame"), false)
-            .addMiscHatch("1+", StatCollector.translateToLocal("GTPP.MBTT.SteamHatch"), hatchPosition, 1)
+            .addMiscHatch("1+", StatCollector.translateToLocal(prefix + "steam_supply"), hatchPosition, 1)
             .addInputBus("1+", hatchPosition, 1)
             .addOutputBus("1+", hatchPosition, 1)
             .addInputHatch("0+", hatchPosition, 1)
