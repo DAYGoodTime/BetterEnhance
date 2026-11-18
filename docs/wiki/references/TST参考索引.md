@@ -19,6 +19,7 @@
 - `src/main/java/com/Nxer/TwistSpaceTechnology/util/text/TSTSharedLocalization.java`：通用结构与蓝图提示键。
 - `src/main/resources/assets/gtnhcommunitymod/lang/{zh_CN,en_US}.lang`：中英文原始语言键。
 - `src/main/java/com/Nxer/TwistSpaceTechnology/config/Config.java`：运行配置入口。
+- 同一 Java 根目录下的 `recipe/craftRecipe/machine/GTCMMachineRecipes.java`：TST 0.8.2 的 `Nether Interface` 段已注释控制器组装机配方。本项目沿用该配方的材料、传送器回退顺序、LuV 电压与 360 秒耗时，仅替换产物；原增强版装配线配方停用并保留为注释。
 
 本项目两台 TST 增强机器的主机说明存于自身 `assets/betterexperience/lang/{zh_CN,en_US}/tooltip/{nether-interface,photonic-quantum-master}.md`，不覆盖或调用 TST Tooltip 语言键。地狱接口配置及光量子掌控者模式常量作为 Markdown 变量传入，结构／状态使用本项目语言键；英文地狱接口旧拼写 `betterxeperience.machine.nether_interface.*` 已对齐 Java 使用的 `betterexperience`。
 

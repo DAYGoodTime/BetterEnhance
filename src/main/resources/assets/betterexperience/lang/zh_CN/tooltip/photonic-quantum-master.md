@@ -1,12 +1,10 @@
-增强版 TST 精密高能光量子掌控者，原作者：Nxer
-使用螺丝刀或界面按钮切换模式
-激光蚀刻机：基础 {aqua:{var:laserParallel}} 并行，{aqua:{var:laserSpeed}} 倍处理速度
-光子掌控者：基础 {aqua:{var:photonParallel}} 并行，{aqua:{var:photonSpeed}} 倍处理速度
-{hr}
-光量子增幅器的加速效果可叠加
-同等级增幅器提高两种模式的并行，最低级为 {yellow:2} 倍，每升一级翻倍
-混用不同等级时不增加并行，仍保留加速及完美超频效果
-安装 {yellow:UMV} 及以上的增幅器可启用完美超频
-{hr}
-支持普通能源仓、多安能源仓及激光仓
-免维护，维护仓可选
+精密高能光量子掌控者的控制器方块
+{blue:Prism tank in order, sir.}
+在 10⁻¹² m 尺度上掌控光子。
+可以在机器背面对应位置安装光量子增幅器，大幅提高处理速度以及更多的并行
+多个增幅器的加速效果可以叠加，也可以不装，混用等级不提供并行翻倍，空位使用强化镀铱机械方块占位。
+使用螺丝刀切换模式。
+{gold:光子掌控者模式：}
+{aqua:{var:photonParallel}x} 并行
+{gold:激光蚀刻机模式：}
+{aqua:{var:laserParallel}x} 并行 | 额外降低 {red:{var:laserTimeReduction}%} 耗时

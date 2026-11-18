@@ -13,12 +13,18 @@ public class ClientProxy extends CommonProxy {
     public void init(FMLInitializationEvent event) {
         super.init(event);
         for (BGEMachineList machine : BGEMachineList.values()) {
-            if (machine.isRegistered()) {
+            if (!machine.isRegistered()) continue;
+            if (machine == BGEMachineList.BetterTSTNetherInterface
+                || machine == BGEMachineList.BetterTSTPreciseHighEnergyPhotonicQuantumMaster) {
                 AnimatedTooltipHandler.addItemTooltip(
                     machine.get(1),
-                    AnimatedTooltipHandler
-                        .text(EnumChatFormatting.AQUA + "BetterGTExperience" + EnumChatFormatting.RESET));
+                    AnimatedTooltipHandler.translatedText("betterexperience.tooltip.tst_original_author"));
             }
+            AnimatedTooltipHandler.addItemTooltip(
+                machine.get(1),
+                AnimatedTooltipHandler.translatedText(
+                    "betterexperience.tooltip.added_by",
+                    EnumChatFormatting.GREEN + "BetterGTExperience" + EnumChatFormatting.GRAY));
         }
     }
 }

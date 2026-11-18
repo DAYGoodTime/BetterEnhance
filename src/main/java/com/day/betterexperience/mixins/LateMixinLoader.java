@@ -20,10 +20,10 @@ public class LateMixinLoader implements ILateMixinLoader {
     public List<String> getMixins(Set<String> loadedMods) {
         if (!loadedMods.contains("gregtech")) return Collections.emptyList();
         return Arrays.asList(
+            "AssemblerBackendMixin",
             "MTEMultiBlockBaseMixin",
             "HatchElementMixin",
             "OutputBusElementMixin",
-            "ThermalBoilerMixin",
-            "AssemblyLineMixin");
+            "ThermalBoilerMixin");
     }
 }

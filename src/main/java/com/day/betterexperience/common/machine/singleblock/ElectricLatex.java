@@ -5,8 +5,12 @@ import gregtech.api.interfaces.ITexture;
 import gregtech.api.interfaces.metatileentity.IMetaTileEntity;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
 import gregtech.api.metatileentity.implementations.MTEBasicMachineWithRecipe;
+import gregtech.api.objects.overclockdescriber.EUOverclockDescriber;
+import gregtech.api.objects.overclockdescriber.OverclockDescriber;
 import gregtech.api.recipe.BasicUIProperties;
 import gregtech.api.recipe.RecipeMaps;
+import gregtech.api.util.GTRecipe;
+import gregtech.api.util.OverclockCalculator;
 
 public class ElectricLatex extends MTEBasicMachineWithRecipe {
 
@@ -53,8 +57,20 @@ public class ElectricLatex extends MTEBasicMachineWithRecipe {
     }
 
     @Override
+    protected OverclockDescriber createOverclockDescriber() {
+        return new EUOverclockDescriber(mTier, mAmperage) {
+
+            @Override
+            public OverclockCalculator createCalculator(OverclockCalculator template, GTRecipe recipe) {
+                return super.createCalculator(template, recipe).setEUtDiscount(LatexMachineSupport.ENERGY_MULTIPLIER)
+                    .setDurationModifier(LatexMachineSupport.DURATION_MULTIPLIER);
+            }
+        };
+    }
+
+    @Override
     public String[] getDescription() {
-        return LatexMachineSupport.getDescription();
+        return LatexMachineSupport.getDescription(false);
     }
 
     @Override

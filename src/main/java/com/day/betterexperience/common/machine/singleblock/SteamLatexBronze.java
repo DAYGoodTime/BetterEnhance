@@ -12,10 +12,12 @@ import com.cleanroommc.modularui.value.sync.PanelSyncManager;
 import com.day.betterexperience.client.gui.SteamLatexGui;
 
 import gregtech.api.enums.TierEU;
+import gregtech.api.enums.TieredVariant;
 import gregtech.api.interfaces.ITexture;
 import gregtech.api.interfaces.tileentity.IGregTechTileEntity;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.implementations.MTEBasicMachineBronze;
+import gregtech.api.objects.overclockdescriber.OverclockDescriber;
 import gregtech.api.recipe.BasicUIProperties;
 import gregtech.api.recipe.RecipeMap;
 import gregtech.api.recipe.RecipeMaps;
@@ -38,8 +40,13 @@ public class SteamLatexBronze extends MTEBasicMachineBronze {
     }
 
     @Override
+    public OverclockDescriber createOverclockDescriber() {
+        return LatexMachineSupport.createSteamOverclockDescriber(TieredVariant.BRONZE, 1, 2);
+    }
+
+    @Override
     public String[] getDescription() {
-        return LatexMachineSupport.getDescription();
+        return LatexMachineSupport.getDescription(true);
     }
 
     @Override

@@ -37,6 +37,7 @@ import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.implementations.MTEMultiBlockBase;
 import gregtech.api.util.GTUtility;
 import gregtech.api.util.GTWaila;
+import gregtech.common.tileentities.machines.outputme.MTEHatchOutputBusME;
 import gregtech.common.tileentities.machines.outputme.MTEHatchOutputME;
 import io.netty.buffer.ByteBuf;
 import mcp.mobius.waila.api.IWailaConfigHandler;
@@ -45,7 +46,7 @@ import mcp.mobius.waila.api.IWailaDataAccessor;
 @IMetaTileEntity.SkipGenerateDescription
 public class MEOutputAssembly extends MTEHatchOutputME {
 
-    private static final String ITEM_OUTPUT_TAG = "betterexperienceItemOutput";
+    public static final String ITEM_OUTPUT_TAG = "betterexperienceItemOutput";
     private static final String ITEM_CELL_TAG = "betterexperienceItemCell";
     private static final String ITEM_WAILA_TAG = "betterexperienceItemWaila";
     private static final String COPY_ID = "betterexperience.me_output_assembly";
@@ -122,6 +123,23 @@ public class MEOutputAssembly extends MTEHatchOutputME {
     @Override
     public String[] getDescription() {
         return new String[] { StatCollector.translateToLocal("betterexperience.machine.me_output_assembly.desc.0") };
+    }
+
+    @Override
+    public void addAdditionalTooltipInformation(ItemStack stack, List<String> tooltip) {
+        NBTTagCompound tag = stack.getTagCompound();
+        long itemCapacity = tag == null ? 0
+            : tag.getCompoundTag(ITEM_OUTPUT_TAG)
+                .getLong("baseCapacity");
+        long fluidCapacity = tag == null ? 0 : tag.getLong("baseCapacity");
+        tooltip.add(
+            StatCollector.translateToLocalFormatted(
+                "GT5U.waila.hatch.outputme.item_cache_capacity",
+                NumberFormatUtil.formatNumber(itemCapacity > 0 ? itemCapacity : MTEHatchOutputBusME.DEFAULT_CAPACITY)));
+        tooltip.add(
+            StatCollector.translateToLocalFormatted(
+                "GT5U.waila.hatch.outputme.fluid_cache_capacity",
+                NumberFormatUtil.formatNumber(fluidCapacity > 0 ? fluidCapacity : DEFAULT_CAPACITY)));
     }
 
     @Override

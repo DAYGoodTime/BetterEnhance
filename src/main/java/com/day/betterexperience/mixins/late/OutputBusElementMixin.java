@@ -10,6 +10,7 @@ import com.day.betterexperience.common.machine.hatch.MEOutputAssembly;
 import gregtech.api.metatileentity.implementations.MTEMultiBlockBase;
 
 // GT5U 5.09.54.265: OutputBus is HatchElement's sixth anonymous constant subclass.
+// Recheck the enum and bytecode on GT upgrades; the anonymous class number is not a stable API.
 @Mixin(targets = "gregtech.api.enums.HatchElement$6", remap = false)
 public abstract class OutputBusElementMixin {
 

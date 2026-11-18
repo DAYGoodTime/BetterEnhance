@@ -30,6 +30,7 @@ import static gregtech.api.enums.Textures.BlockIcons.OVERLAY_FRONT_ELECTRIC_BLAS
 import static gregtech.api.enums.Textures.BlockIcons.OVERLAY_FRONT_ELECTRIC_BLAST_FURNACE_GLOW;
 import static tectech.thing.casing.TTCasingsContainer.sBlockCasingsTT;
 
+import java.text.DecimalFormat;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -276,6 +277,8 @@ public class BetterTSTPreciseHighEnergyPhotonicQuantumMaster
 
     @Override
     protected MultiblockTooltipBuilder createTooltip() {
+        double laserTimeReduction = 100.0
+            * (1.0 - 1.0 / SpeedUpMultiplier_LaserEngraverMode_PreciseHighEnergyPhotonicQuantumMaster);
         return new MultiblockTooltipBuilder().addMachineType(text("machine_type"))
             .addMarkdown(
                 new ResourceLocation("betterexperience", "photonic-quantum-master"),
@@ -284,10 +287,8 @@ public class BetterTSTPreciseHighEnergyPhotonicQuantumMaster
                     Parallel_LaserEngraverMode_PreciseHighEnergyPhotonicQuantumMaster,
                     "photonParallel",
                     Parallel_PhCMode_PreciseHighEnergyPhotonicQuantumMaster,
-                    "laserSpeed",
-                    SpeedUpMultiplier_LaserEngraverMode_PreciseHighEnergyPhotonicQuantumMaster,
-                    "photonSpeed",
-                    SpeedUpMultiplier_PhCMode_PreciseHighEnergyPhotonicQuantumMaster))
+                    "laserTimeReduction",
+                    new DecimalFormat("0.#").format(laserTimeReduction)))
             .beginStructureBlock(15, 7, 9, true)
             .addController(text("controller"))
             .addCasing("296-347", text("iridium_casing"), false)

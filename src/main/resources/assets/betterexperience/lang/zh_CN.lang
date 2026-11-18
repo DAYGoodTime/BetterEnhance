@@ -1,4 +1,6 @@
 betterexperience.config.general=通用配置
+betterexperience.tooltip.added_by=由 %s 添加
+betterexperience.tooltip.tst_original_author=原作者：Nxner & Twist Space Technology
 betterexperience.machine.nether_interface.name=地狱接口
 betterexperience.machine.nether_interface.machine_type=异界传送器
 betterexperience.machine.nether_interface.hatch_position=坚固机械方块位置，提示方块 1
@@ -8,8 +10,7 @@ betterexperience.machine.nether_interface.enhanced_obsidian=机械强化黑曜�
 betterexperience.machine.nether_interface.obsidian=黑曜石
 
 betterexperience.machine.photonic_quantum_master.name=精密高能光量子掌控者
-betterexperience.machine.photonic_quantum_master.machine_type=光子掌控者 / 激光蚀刻机
-betterexperience.machine.photonic_quantum_master.origin=增强版 TST 精密高能光量子掌控者，原作者：Nxer。
+betterexperience.machine.photonic_quantum_master.machine_type=光子掌控者/激光蚀刻机
 betterexperience.machine.photonic_quantum_master.switch_mode=使用螺丝刀或界面按钮切换模式。
 betterexperience.machine.photonic_quantum_master.mode.0=激光蚀刻机模式
 betterexperience.machine.photonic_quantum_master.mode.1=光子掌控者模式
@@ -67,6 +68,10 @@ betterexperience.machine.latex.electric.7.name=精英过胶机 II
 betterexperience.machine.latex.electric.8.name=终极过胶机
 betterexperience.machine.latex.electric.9.name=史诗过胶机
 betterexperience.machine.latex.electric.10.name=史诗过胶机 II
+betterexperience.machine.latex.tooltip.electric.speed=比相同电压的单方块机器快%s
+betterexperience.machine.latex.tooltip.electric.usage=只需要使用配方要求功率的%s
+betterexperience.machine.latex.tooltip.steam.speed=比相同压力的单方块蒸汽机器快%s
+betterexperience.machine.latex.tooltip.steam.usage=蒸汽消耗速率仅为通常所需的%s
 
 betterexperience.machine.cell_destroyer_electrolyzer.name=单元毁灭者电解机
 betterexperience.machine.cell_destroyer_electrolyzer.recipes=使用多方块电解机的无单元配方。

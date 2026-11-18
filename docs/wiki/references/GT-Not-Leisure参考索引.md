@@ -68,6 +68,7 @@
 - 不迁入参考库的自有配方工具类、`RecipeBuilder` 变体或工具箱扩展。
 - 单元毁灭者电解机制造配方参考 `J/common/recipe/gtnl/CraftingTableRecipes.java` 的 `LargeCircuitAssembler` 合成台注册：采用原生 `GTModHandler.addCraftingRecipe`、机器枚举及等级电路矿辞描述，不复制配方内容。包裹线缆材质按本项目 GT5U `5.09.54.265` 缓存源码 `MTERecipeLoader.registerElectrolyser()` 与 `GTModHandler.addMachineCraftingRecipe()` 的 `WIRE` 映射核对，改用 `cableGt16`；不采用电极用的裸金／银／琥珀金／铂线。
 - 单元毁灭者搅拌机制造配方同样参考上述 `CraftingTableRecipes.java` 的原生注册与等级电路矿辞写法；材料及格子排列完全按用户指定，不复制 GTNL 配方、资源或 ID。搅拌机和砖砌外壳枚举、合成材料转换按本项目 GT5U `5.09.54.265` 缓存源码 `ItemList`／`GTModHandler` 核对；储罐沿用本项目电解机配方，蒸汽外壳沿用 `LatexRecipes`，不引入 GTNL 自有 API 或依赖。
+- 两组制造配方在 `common/recipe/CraftingRecipe.java#loadRecipes` 中逐条声明，参考 GTNL `CraftingTableRecipes.java` 的 `LargeCircuitAssembler`、`LargeSteamMixer` 注册写法；保留本项目的 `RecipeBits.BITS`。GT5U `5.09.54.265` 的 `GTModHandler.addCraftingRecipe` 原生展开 `IItemContainer`，遇到空材料时返回 `false`，不再另作重复判断。本次不改加载入口。
 
 ### 长整型输入消耗
 
@@ -88,6 +89,7 @@
 
 ### Tooltip 与仓口
 
+- 过胶机数值说明参考 GTNL `R/lang/zh_CN.lang` 的 `gtnl.machine.common.gtm.tooltip.0`／`.1` 及 GT5U `.265` 的 `GT5U.MBTT.SpeedBase`、`EuDiscountBase`、`Steam.Speed`、`Steam.Eff` 多方块模板。沿用同电压／同压力比较和速度／效率配色；本项目中英语言键由 Markdown 加载，百分比来自实际倍率，不引入 GTNL 依赖。
 - 两台 TST 增强机器 Markdown 迁移（2026-11-15）：阅读当前 `J/common/machine/multiblock/steam/LargeSteamMixer.java#createTooltip()`，该入口已使用 GTNL 自有 `GTNLMultiblockTooltipBuilder.addAutoTooltip`，本次不迁入自动扫描器。沿用本项目蒸汽电解机的 GT 原生 `addMarkdown`／结构页分离方式，签名核对本地 GT5U `.265` sources JAR；未复制 GTNL 代码或资源，未修改运行逻辑。
 
 - 机器署名参考 `J/loader/MachineLoader.java` 注册后调用 `J/utils/text/AnimatedTooltipHandler.java#addItemTooltip` 的物品级附加方式。本项目不复制其自有工具类，直接使用 GTNHLib `0.11.54` 的 `AnimatedTooltipHandler.addItemTooltip(ItemStack, Supplier<String>)`，在客户端初始化完成机器注册后遍历已绑定的 `BGEMachineList`。当前 `2.9.0` 清单指定的 GT5U `5.09.54.265` 中，`toolTipFinisher(String...)` 仅为二进制兼容保留，作者参数明确被忽略；无参收尾不承担署名功能。API 按缓存 sources JAR 核对，未重新解析依赖。
@@ -102,6 +104,10 @@
 
 ### ME输出总成与蒸汽输出接口
 
+- 自定义无序升级注册参考 `J/common/recipe/gtnl/CraftingTableRecipes.java` 的 `YogMergeRecipe` 注册入口，仅沿用通过 Forge `GameRegistry.addRecipe` 注册独立配方类的做法，不引入排序配置或修改 GT5U `5.09.54.265` 的配方行为。
+
+- 总成容量继承与合成（2026-11-17）：阅读 `J/common/recipe/gregtech/AssemblerRecipes.java` 的 ME 总线／仓及代理输出配方，确认其显式写入 `baseCapacity`，不复用其 `Long.MAX_VALUE` 平衡配方或自有 Builder。实际沿用本地 GT5U `5.09.54.265` 的 `AssemblerBackend.modifyFoundRecipe` 复制配方入口、`GTRecipe` 的 NBT 严格输入匹配，以及 `MTEHatchOutputMEBase` 容量持久化。升级材料与八档容量／双奇点按本地 NewHorizonsCoreMod `2.9.99` sources JAR 的 `GT_CraftingRecipeLoader` 核对；总成用独立无序配方保留另一侧和完整原 NBT，不照搬原版固定结果栈。Context7 未提供该版本容量配方细节，具体签名以缓存源码为准，未重新解析依赖或复制参考源码／资源。
+
 - 大型蒸汽仓制造配方补充（2026-11-15）：阅读 `J/common/recipe/gtnl/CraftingTableRecipes.java` 的原生有序合成及青铜板材料引用，复查 `J/common/machine/hatch/CustomFluidHatch.java` 的容量构造；只沿用注册组织，不复制代码或数值。本项目按 GT5U `.265` 缓存 sources JAR 的 `GregtechItemList.Hatch_Input_Steam`、`GregtechCustomHatches` 与 `OrePrefixes.pipeHuge` 核对材料；继续使用原生父类而非 GTNL 自有流体仓。
 
 本轮大型蒸汽仓／ME 供汽（2026-11-15）核对 `J/common/machine/hatch/CustomFluidHatch.java` 的锁定流体／容量／实例构造，以及 `J/common/machine/multiMachineBase/SteamMultiMachineBase.java#depleteInputQuantity` 的专用仓与普通输入仓定向抽取。未复制 GTNL 源码、数值、ID 或资源。本项目直接继承 GT5U `5.09.54.265` 缓存源码的 `MTEHatchCustomFluidBase`；核对 `GregtechCustomHatches`、`MTESteamMultiBlockBase.addSteamInputFluidHatch` 和 `MTEHatchInputME` 的配置副本、模拟／实际 `UNKNOWN` 抽取、配方生命周期。Context7 查得一般 ME 生命周期说明，具体签名与行为仍以本地 `.265` 为准，未重新解析依赖。与 GTNL 自有多流体仓／无线网络不同，本次大型仓只存普通蒸汽，ME 按原生接口抽取并按库存身份去重。
@@ -115,6 +121,7 @@
 
 ### 单方块多流体输出
 
+- 过胶机 GUI 参考 `J/common/machine/basicMachine/SteamAssemblerBronze.java#applyTo` 通过 `BasicUIProperties` 配置覆盖层的方式。按 GT5U `.265` 和 MUI2 `.94` 缓存源码核对，改用 `SteamTexture.NONE`／`IDrawable.EMPTY`，保留槽底；速度与耗能使用 GT 原生超频描述器，未复用 GTNL 数值或资源。
 - 单元毁灭者电解机先在 `J/common/machine/basicMachine/` 检索电解机、离心机及多流体关键词，并在 `J/common/machine/` 检索单方块基类和多流体缓冲入口，未定位到可直接复用的多流体单方块实现。阅读 `Replicator.java` 的 `newMetaEntity`、`checkRecipe`、`buildUI` 和 `GTNLBasicMachineGui.java` 的原生 GUI 继承方式，只采用扩展点组织，不复制其复制物品机制、数值、纹理或 GTNL 标识。
 - 本项目按既有 `ElectricLatex.java` 扩展 GT5U `.265` 的 `MTEBasicMachineWithRecipe`；`MTEIndustrialElectrolyzer.getRecipeMap()` 确认为 `RecipeMaps.electrolyzerNonCellRecipes`，配方池最多 6 项物品和 6 项流体输出。GT 原生 `MTEBasicMachine` 的 `canOutput`、`checkRecipe`、`onPostTick` 仍仅处理第 0 项流体，`MTEBasicMachineBaseGui` 也只建立一个流体输出格，因此不能只改配方池和 UI 的数量。
 - 本项目自行增加六个输出储槽及待产物数组，复用原生单方块的配方检查、概率第 0 项结果、超频与完成回调，补充全输出空间校验、剩余产物概率、NBT、按类型／模拟抽取和自动输出轮询；独立 MUI2 GUI 将六格分别绑定真实储槽。离心机槽位覆盖层、电解机进度条及机器外观均直接引用 GT 资源，不复制 GTNL 源码或资源。
@@ -129,6 +136,8 @@
 
 ### 兼容与注入
 
+- ME 输出总成 Mixin 收敛（2026-11-18）：阅读 `J/mixins/late/gregtech/MixinMTEMultiBlockBaseInterfaceName.java` 的 `WrapOperation`／`original.call` 链式调用，以及 `J/common/machine/hatch/OutputBusMEProxy.java`、`VaultPortHatch.java` 的继承与单节点接口分工；仅借鉴职责与包装方式，未复制源码、代理机制、资源或 ID。具体目标按本项目缓存 GT5U `5.09.54.265` 的 `MTEAssemblyLine`、`MTEThermalBoiler`、`HatchElement`、`IHatchElement`、`AssemblerBackend`、`GTRecipe` 和元数据 API 核对，锅炉四处 `withCount` 的 owner／描述符另经 `javap` 确认。UniMixins `0.3.1` 缓存 dev JAR 已含所用 `WrapOperation`、`Operation`、`WrapMethod`，不另添依赖；链式语义参照 MixinExtras 官方 Wiki 与 Context7。未重新运行依赖解析或编译，不把缓存核对当作运行时验收。
+
 - 加载入口：`J/asm/GTNLEarlyCoreMod.java` 提供 early；`J/mixins/LateMixinLoader.java`（`@LateMixin`／`ILateMixinLoader`）与 `J/mixins/Mixins.java`（带目标模组过滤的注册表）提供 late。
 - 资源配置：`R/mixins.sciencenotleisure.json`、`.early`、`.late`，另有 `.early.j17`／`.late.j17`／`.late.j21` 等 Java 版本变体。
 - 本项目只采用 early / late 分离与空引导模式，不复制功能注入、ASM 补丁、注册／配置体系或 Java 17/21 分支。
@@ -136,7 +145,7 @@
 ### 可选模组集成
 
 - 参考 `J/utils/enums/ModList.java` 的 `Loader.isModLoaded(ID)`、`J/loader/MachineLoader.java` 的 `loadTSTItemTooltip()` 与 `J/loader/RecipeLoader.java` 的 TST 配方入口：先判定模组存在，再调用带 `@Optional.Method(modid = "TwistSpaceTechnology")` 的隔离方法。缺失模组时由 Forge 移除直接引用其 API 的方法。本项目直接使用 Forge 判定，不迁入 GTNL 枚举、Mixin 目标或缓存体系。
-- 本项目 `registry/MachineLoader.java`、`registry/MachineRecipes.java` 对两台增强机器及其制造配方同时设防；未加载时保留原机器 ID 空位，其他机器仍使用原编号。开发依赖保留同一本地 TST 坐标，仅改为不发布的开发依赖。
+- 本项目 `registry/MachineLoader.java`、`common/recipe/CraftingRecipe.java` 对两台增强机器及其制造配方同时设防；未加载时保留原机器 ID 空位，其他机器仍使用原编号。开发依赖保留同一本地 TST 坐标，仅改为不发布的开发依赖。
 - GTNL 主入口为 `before:TwistSpaceTechnology`；本项目增强机器使用 TST 注册的资源，保持原有后加载方向，改为可选的 `after:TwistSpaceTechnology`，不照搬其前加载顺序。API 按 Forge/FML `1.7.10` 官方 `Optional.java` 和 `Loader.java` 核对；未引入新 GT5U API、未运行依赖解析或游戏启动。
 
 ## 与当前热核规划相关的边界

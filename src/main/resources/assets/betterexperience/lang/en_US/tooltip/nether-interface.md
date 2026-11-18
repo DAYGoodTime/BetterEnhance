@@ -1,4 +1,4 @@
-Enhanced TST Nether Interface. Original author: Nxer
+Enhanced TST Nether Interface
 Build portals to bring back resources from the Nether
 Supports up to {yellow:{var:maxParallel}} parallel operations
 {hr}

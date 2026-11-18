@@ -40,65 +40,72 @@ dependencies {
         // 是否不缓存拉取的依赖清单文件
         manifestNoCache = false
         // 是否自动为输出的jar添加 `gtnhVersion` 后缀
-        attachManifestVersionToJar = false
+        attachManifestVersionToJar = true
     }
-    //implementation("com.github.GTNewHorizons:GT5-Unofficial:5.09.54.108:dev")
-    //implementation("com.github.GTNewHorizons:NewHorizonsCoreMod:2.9.49:dev")
-    implementation(gtnhDev("GT5-Unofficial"))
-    // Optional integration: compile and test locally with TST without publishing a required dependency.
-    devOnlyNonPublishable("com.github.GTNewHorizons:Twist-Space-Technology-Mod:0.8.0-RC2.9-main.2+e450069315-dirty:dev")
-    implementation("com.github.GTNewHorizons:GTNHLib:0.11.52:dev")
-    implementation(gtnhDev("NewHorizonsCoreMod"))
-    // NotEnoughEnergistics: the GTNH NEI -> AE pattern terminal transfer. MessTech hands its own terminal's pages to
-    // NEU's handler when the mod is present and falls back to its own import otherwise, see NEI_MessTechConfig.
-    implementation(gtnhDev("NotEnoughEnergistics"))
-    implementation(gtnhDev("ForestryMC"))
-    implementation(gtnhDev("Infernal-Mobs"))
-    implementation(gtnhDev("Galaxy-Space-GTNH"))
-    implementation(gtnhDev("SGCraft"))
-    implementation(gtnhDev("twilightforest"))
-    implementation(gtnhDev("SpiceOfLife"))
-    implementation(gtnhDev("AppleCore"))
-    implementation(gtnhDev("Avaritia"))
-    runtimeOnlyNonPublishable(gtnhDev("Avaritiaddons"))
-    runtimeOnlyNonPublishable(gtnhDev("neiaddons"))
-    implementation(gtnhDev("Binnie"))
-    implementation(gtnhDev("BloodMagic"))
-    implementation(gtnhDev("Botania"))
-    implementation(gtnhDev("Draconic-Evolution"))
-    implementation(gtnhDev("EnderIO"))
-    implementation(gtnhDev("Eternal-Singularity"))
-    implementation(gtnhDev("supersolarpanels"))
-    implementation(rfg.deobf('curse.maven:advsolar-362768:2885953'))
-    implementation ("net.industrial-craft:industrialcraft-2:2.2.828-experimental:dev")
-    implementation(deobfCurse('witchery-69673:2234410'))
-    implementation(gtnhDev("WitcheryExtras"))
-    //runtime
-    // Cell Destroyer Electrolyzer crafting ingredients; versions follow the selected modpack manifest.
-    runtimeOnlyNonPublishable(gtnhDev("BuildCraft"))
-    runtimeOnlyNonPublishable(gtnhDev("Irontanks"))
-    //runtimeOnlyNonPublishable("com.github.GTNewHorizons:NotEnoughItems:2.8.125-GTNH:dev")
-    runtimeOnlyNonPublishable(gtnhDev("NotEnoughItems"))
-    // Transitive TCNEIAdditions/ThaumicTinkerer metadata brings in the SRG jar; remap it for MCP runs.
-    runtimeOnlyNonPublishable(rfg.deobf("curse.maven:thaumcraft-nei-plugin-225095:2241913"))
-    // CropsNH's post-init compat handler resolves this API even when the wand mod is absent.
-    runtimeOnlyNonPublishable(gtnhDev("BetterBuildersWands"))
-    runtimeOnlyNonPublishable("ganymedes01.etfuturum:Et-Futurum-Requiem:2.6.60-GTNH:dev")
-    runtimeOnlyNonPublishable(gtnhDev("ThaumicTinkerer"))
-    runtimeOnlyNonPublishable(gtnhDev("OpenComputers"))
-    runtimeOnlyNonPublishable(gtnhDev("ThaumicEnergistics"))
-    runtimeOnlyNonPublishable(gtnhDev("MatterManipulator"))
-    runtimeOnlyNonPublishable(gtnhDev("Universal-Singularities"))
-    runtimeOnlyNonPublishable(rfg.deobf("curse.maven:BiomesOPlenty-220318:2499612"))
-    runtimeOnlyNonPublishable(gtnhDev("MagicBees"))
-    runtimeOnlyNonPublishable("thaumcraft:Thaumcraft:1.7.10-4.2.3.5:dev")
-    runtimeOnlyNonPublishable("com.github.GTNewHorizons:Chisel:2.17.34-GTNH:dev")
-    runtimeOnlyNonPublishable(gtnhDev("StructureLib"))
-    runtimeOnlyNonPublishable(gtnhDev("BlockRenderer6343")) { transitive = false }
-    //extra mods
-    annotationProcessor('com.google.auto.value:auto-value:1.10.1')
-    implementation('com.google.auto.value:auto-value-annotations:1.10.1')
 
+    // GTNH：本项目直接引用的类型，编译和运行都需要。
+    // UniMixins 由 GTNH convention 的 usesMixins 提供。
+    implementation(gtnhDev("AE2FluidCraft-Rework"))
+    implementation(gtnhDev("Applied-Energistics-2-Unofficial"))
+    implementation(gtnhDev("GT5-Unofficial"))
+    implementation(gtnhDev("GTNHLib"))
+    implementation(gtnhDev("ModularUI"))
+    implementation(gtnhDev("ModularUI2"))
+    implementation(gtnhDev("StructureLib"))
+    implementation(gtnhDev("waila"))
+
+    // 可选 TST 集成：需要编译和开发运行，但不发布为强制依赖。
+    devOnlyNonPublishable("com.github.Nxer:Twist-Space-Technology-Mod:0.8.2:dev")
+
+    // GTNH：开发整合包内容、配方材料和传递兼容，不发布为本项目依赖。
+    runtimeOnlyNonPublishable(gtnhDev("AppleCore"))
+    runtimeOnlyNonPublishable(gtnhDev("Avaritia"))
+    runtimeOnlyNonPublishable(gtnhDev("Avaritiaddons"))
+    runtimeOnlyNonPublishable(gtnhDev("bdlib"))
+    // CropsNH 的 post-init 兼容处理器即使未安装魔杖模组仍会解析其 API。
+    runtimeOnlyNonPublishable(gtnhDev("BetterBuildersWands"))
+    runtimeOnlyNonPublishable(gtnhDev("Binnie"))
+    runtimeOnlyNonPublishable(gtnhDev("BlockRenderer6343")) { transitive = false }
+    runtimeOnlyNonPublishable(gtnhDev("BloodMagic"))
+    runtimeOnlyNonPublishable(gtnhDev("Botania"))
+    // BuildCraft 和 Irontanks 供单元毁灭者制造配方按注册名查找储罐。
+    runtimeOnlyNonPublishable(gtnhDev("BuildCraft"))
+    runtimeOnlyNonPublishable(gtnhDev("Chisel"))
+    runtimeOnlyNonPublishable(gtnhDev("Draconic-Evolution"))
+    runtimeOnlyNonPublishable(gtnhDev("EnderIO"))
+    runtimeOnlyNonPublishable(gtnhDev("Eternal-Singularity"))
+    runtimeOnlyNonPublishable(gtnhDev("ForestryMC"))
+    runtimeOnlyNonPublishable(gtnhDev("Galaxy-Space-GTNH"))
+    // 基因处理配方的开发测试内容。
+    runtimeOnlyNonPublishable(gtnhDev("gendustry")) { transitive = false }
+    runtimeOnlyNonPublishable(gtnhDev("Infernal-Mobs"))
+    runtimeOnlyNonPublishable(gtnhDev("Irontanks"))
+    runtimeOnlyNonPublishable(gtnhDev("MagicBees"))
+    runtimeOnlyNonPublishable(gtnhDev("MatterManipulator"))
+    runtimeOnlyNonPublishable(gtnhDev("neiaddons"))
+    runtimeOnlyNonPublishable(gtnhDev("NewHorizonsCoreMod"))
+    runtimeOnlyNonPublishable(gtnhDev("NotEnoughEnergistics"))
+    runtimeOnlyNonPublishable(gtnhDev("NotEnoughItems"))
+    runtimeOnlyNonPublishable(gtnhDev("OpenComputers"))
+    runtimeOnlyNonPublishable(gtnhDev("SGCraft"))
+    runtimeOnlyNonPublishable(gtnhDev("SpiceOfLife"))
+    runtimeOnlyNonPublishable(gtnhDev("supersolarpanels"))
+    runtimeOnlyNonPublishable(gtnhDev("ThaumicEnergistics"))
+    runtimeOnlyNonPublishable(gtnhDev("ThaumicTinkerer"))
+    runtimeOnlyNonPublishable(gtnhDev("twilightforest"))
+    runtimeOnlyNonPublishable(gtnhDev("Universal-Singularities"))
+    runtimeOnlyNonPublishable(gtnhDev("WitcheryExtras"))
+
+    // 开发运行：使用固定 Maven 坐标或需要反混淆的外部模组。
+    runtimeOnlyNonPublishable(rfg.deobf("curse.maven:advsolar-362768:2885953"))
+    runtimeOnlyNonPublishable(rfg.deobf("curse.maven:BiomesOPlenty-220318:2499612"))
+    runtimeOnlyNonPublishable("ganymedes01.etfuturum:Et-Futurum-Requiem:2.6.60-GTNH:dev")
+    runtimeOnlyNonPublishable(rfg.deobf("curse.maven:extra-utilities-225561:2264384"))
+    runtimeOnlyNonPublishable("net.industrial-craft:industrialcraft-2:2.2.828-experimental:dev")
+    runtimeOnlyNonPublishable("thaumcraft:Thaumcraft:1.7.10-4.2.3.5:dev")
+    // TCNEIAdditions/ThaumicTinkerer 传递引入 SRG 包；开发运行需要转换为 MCP。
+    runtimeOnlyNonPublishable(rfg.deobf("curse.maven:thaumcraft-nei-plugin-225095:2241913"))
+    runtimeOnlyNonPublishable(deobfCurse("witchery-69673:2234410"))
 
     // jvmDowngrader
     compileOnly("javax.xml.bind:jaxb-api:2.3.1")
