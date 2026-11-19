@@ -193,6 +193,11 @@ public class BetterTSTNetherInterface extends BGTEMultiblockBase<BetterTSTNether
     }
 
     @Override
+    protected long getActualEnergyUsage() {
+        return -lEUt;
+    }
+
+    @Override
     public ITexture[] getTexture(IGregTechTileEntity tile, ForgeDirection side, ForgeDirection facing, int colorIndex,
         boolean active, boolean redstone) {
         return TSTControllerTextures.getTexture(
