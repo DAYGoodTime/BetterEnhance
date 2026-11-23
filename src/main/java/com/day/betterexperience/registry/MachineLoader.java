@@ -7,6 +7,7 @@ import com.day.betterexperience.common.machine.hatch.LargeSteamHatch;
 import com.day.betterexperience.common.machine.hatch.MEOutputAssembly;
 import com.day.betterexperience.common.machine.multiblock.BetterTSTNetherInterface;
 import com.day.betterexperience.common.machine.multiblock.BetterTSTPreciseHighEnergyPhotonicQuantumMaster;
+import com.day.betterexperience.common.machine.multiblock.FixedDistillationTower;
 import com.day.betterexperience.common.machine.multiblock.SteamIndustrialElectrolyzer;
 import com.day.betterexperience.common.machine.singleblock.CellDestroyerElectrolyzer;
 import com.day.betterexperience.common.machine.singleblock.CellDestroyerMixer;
@@ -110,6 +111,12 @@ public class MachineLoader {
                 id++,
                 "betterexperience.large_steam_hatch",
                 StatCollector.translateToLocal("betterexperience.machine.large_steam_hatch.name")).getStackForm(1));
+        BGEMachineList.FixedDistillationTower.set(
+            new FixedDistillationTower(
+                id++,
+                "betterexperience.fixed_distillation_tower",
+                StatCollector.translateToLocal("betterexperience.machine.fixed_distillation_tower.name"))
+                    .getStackForm(1));
     }
 
     @Optional.Method(modid = "TwistSpaceTechnology")

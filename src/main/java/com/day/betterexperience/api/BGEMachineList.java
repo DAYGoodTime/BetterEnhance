@@ -30,7 +30,8 @@ public enum BGEMachineList {
     CellDestroyerMixerMV,
     CellDestroyerMixerHV,
     CellDestroyerMixerEV,
-    LargeSteamHatch;
+    LargeSteamHatch,
+    FixedDistillationTower;
 
     private ItemStack stack;
 

@@ -127,6 +127,7 @@ public final class CraftingRecipe implements ModRecipeLoader {
                 OrePrefixes.cableGt16.get(Materials.Aluminium) });
         registerLatexRecipes();
         registerMEOutputAssemblyRecipe();
+        registerFixedDistillationTowerRecipe();
     }
 
     @Override
@@ -229,6 +230,19 @@ public final class CraftingRecipe implements ModRecipeLoader {
             new Object[] { "SPS", "CMC", "SPS", 'S',
                 GTOreDictUnificator.get(OrePrefixes.plateDense, Materials.Polybenzimidazole, 1), 'P',
                 ItemList.Electric_Pump_UEV, 'C', OrePrefixes.circuit.get(Materials.UEV), 'M', ItemList.Casing_UEV });
+    }
+
+    private static void registerFixedDistillationTowerRecipe() {
+        GTValues.RA.stdBuilder()
+            .itemInputs(
+                ItemList.Distillation_Tower.get(1),
+                ItemList.Electric_Pump_LuV.get(8),
+                GTOreDictUnificator.get(OrePrefixes.circuit.get(Materials.ZPM), 2))
+            .itemOutputs(BGEMachineList.FixedDistillationTower.get(1))
+            .fluidInputs(Materials.SolderingAlloy.getMolten(576))
+            .duration(30 * SECONDS)
+            .eut(RECIPE_LuV)
+            .addTo(RecipeMaps.assemblerRecipes);
     }
 
     private static void registerMEOutputAssemblyRecipe() {

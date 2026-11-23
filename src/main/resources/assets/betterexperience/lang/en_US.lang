@@ -1,4 +1,9 @@
 betterxeperience.config.general=General
+betterexperience.machine.fixed_distillation_tower.name=Fixed Distillation Tower
+betterexperience.machine.fixed_distillation_tower.type=Distillation Tower / Distillery
+betterexperience.machine.fixed_distillation_tower.mode.tower=Distillation Tower Mode
+betterexperience.machine.fixed_distillation_tower.mode.distillery=Distillery Mode
+betterexperience.machine.fixed_distillation_tower.energy_requirement=Requires at least one energy hatch of either type.
 betterexperience.tooltip.added_by=Added by %s
 betterexperience.tooltip.tst_original_author=Original author: Nxner & Twist Space Technology
 betterexperience.machine.nether_interface.name=Nether Interface

@@ -1,4 +1,9 @@
 betterexperience.config.general=通用配置
+betterexperience.machine.fixed_distillation_tower.name=懒人蒸馏塔
+betterexperience.machine.fixed_distillation_tower.type=蒸馏塔／蒸馏室
+betterexperience.machine.fixed_distillation_tower.mode.tower=蒸馏塔模式
+betterexperience.machine.fixed_distillation_tower.mode.distillery=蒸馏室模式
+betterexperience.machine.fixed_distillation_tower.energy_requirement=至少一个能源仓
 betterexperience.tooltip.added_by=由 %s 添加
 betterexperience.tooltip.tst_original_author=原作者：Nxner & Twist Space Technology
 betterexperience.machine.nether_interface.name=地狱接口
